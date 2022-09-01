@@ -61,7 +61,7 @@ public class UserRestController {
 		
 		Map<String, String> map = new HashMap<>();
 		
-		User user = null;
+		User user = userBO.getUser(loginId, password);
 		
 		if(user != null) {
 			map.put("result", "success");

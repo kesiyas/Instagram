@@ -40,12 +40,20 @@
 	
 	</select>
 	
-	<select id="selectUser" parameterType="map">
+	<select id="selectUser" parameterType="map" resultType="com.kesiyas.spring.instagram.user.model.User">
 		SELECT
 			`id`
 			, `loginId`
 			, `name`
 			, `nickname`
+			, `phoneNumber`
+			, `password`
+			, `createdAt`
+			, `updatedAt`
 		FROM
+			`user`
+		WHERE
+			`loginId` = #{loginId}
+			`password` = #{password}
 	</select>
 </mapper>

@@ -27,9 +27,9 @@
 			<div class="d-flex justify-content-center box ml-3 mr-5">
 				<div class="login-box">
 					<h2 class="my-4 text-center">Instagram</h2>
-					<input type="text" placeholder="Username" class="form-control">
-					<input type="text" placeholder="비밀 번호" class="form-control mt-3">
-					<button type="button" class="btn btn-block btn-info mt-3">로그인</button>
+					<input type="text" placeholder="아이디" class="form-control" id="loginIdInput">
+					<input type="text" placeholder="비밀 번호" class="form-control mt-3" id="passwordInput">
+					<button type="button" class="btn btn-block btn-info mt-3" id="loginBtn">로그인</button>
 					<div class="d-flex mt-2">
 						<a href="#" class="mr-2"><small>아이디</small></a>
 						<a href="#"><small>비밀번호 찾기</small></a>
@@ -46,5 +46,48 @@
 		
 		<c:import url="/WEB-INF/jsp/include/footer.jsp"></c:import>
 	</div>
+	
+	<script>
+		$(document).ready(function(){
+			$("#loginBtn").on("click", function(){
+				
+				let loginId = $("#loginIdInput").val();
+				let password = $("#passwordInput").val();
+
+				if(loginId == "") {
+					alert("아이디를 입력하세요.");
+					return ;
+				}
+				
+				if(password == "") {
+					alert("비밀번호를 입력하세요.");
+					return ;
+				}
+				
+				$.ajax({
+					type:"post"
+					, url:"/user/signin"
+					, data:{"loginId":loginId, "password":password}
+					, success:function(data){
+						
+						if(data.result=="success") {
+							alert("로그인 성공");
+						}else{
+							alert("로그인 실패");
+						}
+					}
+					, error:function(){						
+						alert("로그인 에러.");
+					}
+					
+						
+					
+				});
+				
+			});
+			
+			
+		});
+	</script>
 </body>
 </html>

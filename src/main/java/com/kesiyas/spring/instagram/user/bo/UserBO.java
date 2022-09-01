@@ -34,6 +34,6 @@ public class UserBO {
 		
 		String encryptPassword = EncryptUtils.md5(password);
 		
-		
+		return userDAO.selectUser(loginId, encryptPassword);
 	}
 }
