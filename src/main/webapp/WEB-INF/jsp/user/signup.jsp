@@ -19,7 +19,7 @@
 		<c:import url="/WEB-INF/jsp/include/header.jsp"></c:import>
 		
 		<section class="contents d-flex justify-content-center">
-			<div class="join-box content d-flex justify-content-center">
+			<div class="box content-margin d-flex justify-content-center">
 				<div class="m-5 col-9 d-flex flex-column align-items-center">
 					<h2 class="mb-3 text-center">Instagram</h2>
 					<div class="d-flex w-75">
