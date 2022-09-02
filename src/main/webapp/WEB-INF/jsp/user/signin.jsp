@@ -28,7 +28,7 @@
 				<div class="login-box">
 					<h2 class="my-4 text-center">Instagram</h2>
 					<input type="text" placeholder="아이디" class="form-control" id="loginIdInput">
-					<input type="text" placeholder="비밀 번호" class="form-control mt-3" id="passwordInput">
+					<input type="password" placeholder="비밀 번호" class="form-control mt-3" id="passwordInput">
 					<button type="button" class="btn btn-block btn-info mt-3" id="loginBtn">로그인</button>
 					<div class="d-flex mt-2">
 						<a href="#" class="mr-2"><small>아이디</small></a>
@@ -49,6 +49,8 @@
 	
 	<script>
 		$(document).ready(function(){
+			
+			
 			$("#loginBtn").on("click", function(){
 				
 				let loginId = $("#loginIdInput").val();
