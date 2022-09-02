@@ -20,8 +20,8 @@
 		
 		<section class="contents d-flex justify-content-center">
 			<div class="join-box content d-flex justify-content-center">
-				<div class="m-4 col-9 d-flex flex-column align-items-center">
-					<h2 class="my-3 text-center">Instagram</h2>
+				<div class="m-5 col-9 d-flex flex-column align-items-center">
+					<h2 class="mb-3 text-center">Instagram</h2>
 					<div class="d-flex w-75">
 						<input type="text" placeholder="아이디" class="form-control mt-3" id="loginIdInput">
 							
@@ -66,10 +66,12 @@
 				}
 				
 				$.ajax({
-					type:"post"
+					type:"get"
 					, url:"/user/is_duplicate"
 					, data:{"loginId":loginId}
 					, success:function(data){
+						isCheck = true;
+						
 						if(data.result) {
 							isDuplicateLoginId = true;
 							alert("사용중인 아이디 입니다.")
@@ -92,7 +94,7 @@
 				let password = $("#passwordInput").val();
 				let checkPassword = $("#checkPasswordInput").val();
 				let phoneNumber = $("#phoneNumberInput").val();
-				let regPhone = /^01([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$/;
+				let regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
 				
 				if(loginId == "") {
 					alert("아이디를 입력하세요.");
@@ -134,10 +136,10 @@
 					return ; 
 				}
 				
-				/*if(!regPhone.test("phoneNumber")) {
+				if(!regPhone.test(phoneNumber)) {
 					alert("올바른 형식이 아닙니다.");
 					return ;
-				}*/
+				}
 				
 				$.ajax({
 					type:"post"

@@ -44,7 +44,7 @@ public class UserRestController {
 		return map;
 	}
 	
-	@PostMapping("/is_duplicate")
+	@GetMapping("/is_duplicate")
 	public Map<String, Boolean> isDuplicate(@RequestParam("loginId") String loginId){
 		
 		Map<String, Boolean> map = new HashMap<>();
