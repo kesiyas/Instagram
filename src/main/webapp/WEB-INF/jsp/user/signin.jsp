@@ -21,11 +21,11 @@
 		<c:import url="/WEB-INF/jsp/include/header.jsp"></c:import>
 		
 		<section class="contents">
-			<div class="content d-flex justify-content-center align-items-center">
+			<div class="content-margin d-flex justify-content-center align-items-center">
 				<div class="ml-5 mr-3">	
 					<img id="bannerImg" src="/static/img/banner1.PNG" alt="배너 사진">
 				</div>
-				<div class="d-flex justify-content-center box ml-3 mr-5">
+				<div class="d-flex justify-content-center login-div ml-3 mr-5">
 					<div class="login-box">
 						<form id="loginForm">
 							<h2 class="my-4 text-center">Instagram</h2>
@@ -34,13 +34,13 @@
 							<button type="submit" class="btn btn-block btn-info mt-3" id="loginBtn">로그인</button>
 						</form>
 						<div class="d-flex mt-2">
-							<a href="#" class="mr-2"><small>아이디</small></a>
+							<a href="/user/findId/view" class="mr-2"><small>아이디</small></a>
 							<a href="#"><small>비밀번호 찾기</small></a>
 						</div>
 						
 						<div class="mt-5">
 							<span>계정이 없으신가요?</span>
-							<a href="#">가입하기</a>
+							<a href="/user/signup/view">가입하기</a>
 						</div>
 					</div>
 				</div>
