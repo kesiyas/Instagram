@@ -19,19 +19,20 @@
 		<c:import url="/WEB-INF/jsp/include/header.jsp"></c:import>
 		
 		<section class="contents d-flex justify-content-center">
-			<div class="join-box content">
-				<div class="m-4 d-flex flex-column align-items-center">
+			<div class="join-box content d-flex justify-content-center">
+				<div class="m-4 col-9 d-flex flex-column align-items-center">
 					<h2 class="my-3 text-center">Instagram</h2>
-					<input type="text" placeholder="아이디" class="form-control mt-3 col-7" id="loginIdInput">
+					<div class="d-flex w-75">
+						<input type="text" placeholder="아이디" class="form-control mt-3" id="loginIdInput">
 							
-					<button type="button" class="btn btn-success mt-3" id="checkBtn">중복확인</button>
-
-					<input type="text" placeholder="이름" class="form-control mt-3 col-7" id="nameInput">
-					<input type="text" placeholder="닉네임" class="form-control mt-3 col-7" id="nicknameInput">
-					<input type="password" placeholder="비밀번호" class="form-control mt-3 col-7" id="passwordInput">
-					<input type="password" placeholder="비밀번호 확인" class="form-control mt-3 col-7" id="checkPasswordInput">
-					<input type="text" placeholder="휴대폰 번호" class="form-control mt-3 col-7" id="phoneNumberInput">
-					<button type="button" class="btn btn-block btn-info mt-3 col-7" id="joinBtn">가입하기</button>
+						<button type="button" class="btn btn-success mt-3 btn-sm" id="checkBtn">중복확인</button>
+					</div>
+					<input type="text" placeholder="이름" class="form-control mt-3 w-75" id="nameInput">
+					<input type="text" placeholder="닉네임" class="form-control mt-3 w-75" id="nicknameInput">
+					<input type="password" placeholder="비밀번호" class="form-control mt-3 w-75" id="passwordInput">
+					<input type="password" placeholder="비밀번호 확인" class="form-control mt-3 w-75" id="checkPasswordInput">
+					<input type="text" placeholder="휴대폰 번호" class="form-control mt-3 w-75" id="phoneNumberInput">
+					<button type="button" class="btn btn-block btn-info mt-3 w-75" id="joinBtn">가입하기</button>
 				</div>
 			</div>
 		</section>
@@ -44,12 +45,24 @@
 	<script>
 		$(document).ready(function(){
 			
+			// 중복 체크 확인 상태 저장 변수
+			var isCheck = false;
+			// 중복 상태 저장 변수
+			var isDuplicateLoginId = true;
+			
+			$("#loginIdInput").on("input", function(){
+				
+				isCheck = false;
+				isDuplicateLoginId = true;
+			});
+			
 			$("#checkBtn").on("click", function(){
 				
 				let loginId = $("#loginIdInput").val();
 				
 				if(loginId == "") {
 					alert("아이디를 입력하세요.");
+					return ;
 				}
 				
 				$.ajax({
@@ -58,8 +71,10 @@
 					, data:{"loginId":loginId}
 					, success:function(data){
 						if(data.result) {
+							isDuplicateLoginId = true;
 							alert("사용중인 아이디 입니다.")
 						} else {
+							isDuplicateLoginId = false;
 							alert("사용가능한 아이디 입니다.")
 						}
 					}
@@ -77,7 +92,7 @@
 				let password = $("#passwordInput").val();
 				let checkPassword = $("#checkPasswordInput").val();
 				let phoneNumber = $("#phoneNumberInput").val();
-				var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+				let regPhone = /^01([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$/;
 				
 				if(loginId == "") {
 					alert("아이디를 입력하세요.");
@@ -109,10 +124,20 @@
 					return ;
 				}
 				
-				if(!regPhone.test("phoneNumber")){
-					alert("휴대폰 번호 형식에 맞지 않습니다.");
-					return ;
+				if(!isCheck) {
+					alert("아이디 중복 확인을 해주세요.");
+					return ; 
 				}
+				
+				if(isDuplicateLoginId) {
+					alert("사용중인 아이디 입니다.");
+					return ; 
+				}
+				
+				/*if(!regPhone.test("phoneNumber")) {
+					alert("올바른 형식이 아닙니다.");
+					return ;
+				}*/
 				
 				$.ajax({
 					type:"post"

@@ -44,16 +44,16 @@
 		SELECT
 			`id`
 			, `loginId`
+			, `password`
 			, `name`
 			, `nickname`
 			, `phoneNumber`
-			, `password`
 			, `createdAt`
 			, `updatedAt`
 		FROM
 			`user`
 		WHERE
-			`loginId` = #{loginId}
+			`loginId` = #{loginId} AND
 			`password` = #{password}
 	</select>
 </mapper>
