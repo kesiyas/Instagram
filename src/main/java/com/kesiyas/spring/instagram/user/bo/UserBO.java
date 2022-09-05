@@ -27,7 +27,7 @@ public class UserBO {
 	
 	public boolean isDuplicate(String loginId) {
 		
-		return (userDAO.selectLoginId(loginId) != 0) ? true : false;
+		return (userDAO.selectCheckLoginId(loginId) != 0) ? true : false;
 	}
 	
 	public User getUser(String loginId, String password) {
@@ -35,5 +35,11 @@ public class UserBO {
 		String encryptPassword = EncryptUtils.md5(password);
 		
 		return userDAO.selectUser(loginId, encryptPassword);
+	}
+	
+	// 계정 찾기
+	public User getloginId(String name, String nickname) {
+		
+		return userDAO.selectLoginId(name, nickname);
 	}
 }

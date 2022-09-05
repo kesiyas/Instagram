@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,4 +84,26 @@ public class UserRestController {
 		return map;
 	}
 	
+	// 계정 찾기
+	@PostMapping("/findId")
+	public Map<String, Object> findId(
+			@RequestParam("name") String name
+			, @RequestParam("nickname") String nickname
+			, Model model){
+		
+		User user = userBO.getloginId(name, nickname);;
+				
+		Map<String, Object> map = new HashMap<>();
+					
+		if(user != null) {
+			map.put("result", "success");
+			map.put("loginId", user.getLoginId());
+		} else {
+			map.put("result", "fail");
+		}
+		
+		model.addAttribute("loginId", map.get("loginId"));
+		
+		return map;
+	}
 }

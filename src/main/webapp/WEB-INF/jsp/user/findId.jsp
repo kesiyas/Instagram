@@ -25,21 +25,25 @@
 				 		<h3 class="mt-5">내 계정 찾기</h3>
 				 	</div>
 				</div>
-				<div class="border-bottom-color d-flex flex-column align-items-center">
-					
+				
+				<div class="border-bottom-color">
+					<div id="find" class="d-flex flex-column align-items-center">
 						<div class="my-4 font-size">계정을 검색하려면 이메일 주소 또는 휴대폰 번호를 입력하세요.</div>
 						<div class="col-7">
 							<div class="d-flex flex-column align-items-center">
-								<input type="text" placeholder="아이디" class="form-control mt-3 col-12" id="loginIdInput">
+								<input type="text" placeholder="이름" class="form-control mt-3 col-12" id="nameInput">
 								<input type="text" placeholder="닉네임" class="form-control mt-3 col-12" id="nicknameInput">
 							</div>
 							
 							<button class="btn btn-primary text-white my-4 float-right" id="checkBtn">확인</button>
 						</div>
+					</div>
 					
-					
-					
-				</div>
+					<div id="result" class="d-none text-center my-5">
+						<h3>사용자님의 계정은 ${loginId } 입니다</h3>
+					</div>
+				</div>		
+				
 				<div class="my-4 text-center">
 					<div class="my-3 font-weight-bold">새 계정 만들기</div>
 					<span class="font-weight-bold">또는</span>
@@ -53,13 +57,13 @@
 	</div>
 	
 	<script>
-		$(document).reayd(function(){
+		$(document).ready(function(){
 			$("#checkBtn").on("click", function(){
-				let loginBtn = $("#loginBtnInput").val();
-				let nickname = $("#nickname").val();
+				let name = $("#nameInput").val();
+				let nickname = $("#nicknameInput").val();
 				
-				if(loginBtn == "") {
-					alert("아이디를 입력하세요.");
+				if(name == "") {
+					alert("이름을 입력하세요.");
 					return;
 				}
 				
@@ -67,6 +71,26 @@
 					alert("닉네임을 입력하세요.");
 					return;
 				}
+				
+				$.ajax({
+					type:"post"
+					, url:"/user/findId"
+					, data:{"name":name, "nickname":nickname}
+					, success:function(data){
+						if(data.result == "success"){
+							$("#result").removeClass("d-none");
+							$("#find").removeClass("d-flex").addClass("d-none");
+
+						} else {
+							alert("계정을 찾을 수 없습니다.");
+							$("#result").addClass("d-none");
+							$("#find").addClass("d-flex").removeClass("d-none");
+						}
+					}
+					, error:function(){
+						alert("계정 찾기 에러 발생");
+					}
+				});
 			});
 			
 			

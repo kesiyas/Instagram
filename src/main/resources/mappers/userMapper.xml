@@ -30,7 +30,7 @@
 	
 	</insert>
 
-	<select id="selectLoginId" parameterType="String" resultType="int">
+	<select id="selectCheckLoginId" parameterType="String" resultType="int">
 		SELECT
 			count(1)
 		FROM
@@ -55,5 +55,19 @@
 		WHERE
 			`loginId` = #{loginId} AND
 			`password` = #{password}
+	</select>
+	
+	<select id="selectLoginId" parameterType="map" resultType="com.kesiyas.spring.instagram.user.model.User">
+		SELECT
+			`id`
+			, `loginId`
+			, `name`
+			, `createdAt`
+			, `updatedAt`
+		FROM 
+			`user`
+		WHERE
+			`name` = #{name} AND
+			`nickname` = #{nickname}	
 	</select>
 </mapper>
