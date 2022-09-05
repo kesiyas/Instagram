@@ -89,7 +89,7 @@ public class UserRestController {
 	public Map<String, Object> findId(
 			@RequestParam("name") String name
 			, @RequestParam("nickname") String nickname
-			, Model model){
+			){
 		
 		User user = userBO.getloginId(name, nickname);;
 				
@@ -101,8 +101,7 @@ public class UserRestController {
 		} else {
 			map.put("result", "fail");
 		}
-		
-		model.addAttribute("loginId", map.get("loginId"));
+	
 		
 		return map;
 	}

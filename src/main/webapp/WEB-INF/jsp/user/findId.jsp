@@ -40,7 +40,7 @@
 					</div>
 					
 					<div id="result" class="d-none text-center my-5">
-						<h3>사용자님의 계정은 ${loginId } 입니다</h3>
+						<h3>사용자님의 계정은 <div class="my-2 text-info" id="loginId"></div> 입니다</h3>
 					</div>
 				</div>		
 				
@@ -80,7 +80,9 @@
 						if(data.result == "success"){
 							$("#result").removeClass("d-none");
 							$("#find").removeClass("d-flex").addClass("d-none");
-
+							
+							var loginId = data.loginId;
+							document.getElementById("loginId").innerHTML=loginId;
 						} else {
 							alert("계정을 찾을 수 없습니다.");
 							$("#result").addClass("d-none");
