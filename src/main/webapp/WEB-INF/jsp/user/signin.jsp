@@ -92,7 +92,7 @@
 					, success:function(data){
 						
 						if(data.result=="success") {
-							alert("로그인 성공");
+							location.href = "/post/list/view"
 						}else{
 							alert("로그인 실패");
 						}

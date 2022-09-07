@@ -11,7 +11,7 @@ import com.kesiyas.spring.instagram.user.model.User;
 public class UserBO {
 	
 	@Autowired
-	UserDAO userDAO;
+	private UserDAO userDAO;
 	
 	public int addUser(
 			String loginId

@@ -8,7 +8,7 @@ header {
 .contents {
 }
 
-.contents > .content-margin {
+.contents .content-margin {
 	margin-bottom: 110px;
 	margin-top: 110px;
 }
@@ -24,7 +24,7 @@ header {
 	
 } 
 
-.contents > .box{
+.contents .box{
 	border: solid 3px #dddddd;
 	width:600px;
 }
@@ -42,7 +42,24 @@ header {
 	float: right;
 }
 
+.contents .storyBox {
+	width:470px;
+	border: solid 3px #dddddd;
+}
+
+.contents .comment-margin {
+	margin-left: 120px;
+}
+
+li {
+	list-style: none;
+}
+
 footer { 
 	border: solid 3px white;
  	border-top-color: #dddddd;
+}
+
+.f {
+	font-family: Helvetica, Arial, sans-serif sans-serif;
 }

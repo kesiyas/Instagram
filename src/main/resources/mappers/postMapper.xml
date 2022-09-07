@@ -25,5 +25,19 @@
 			, now()
 		)
 	</insert>
+	
+	<select id="selectPost" parameterType="int" resultType="com.kesiyas.spring.instagram.post.model.Post">
+		SELECT
+			`id`
+			, `userId`
+			, `content`
+			, `imgPath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+	</select>
 
 </mapper>

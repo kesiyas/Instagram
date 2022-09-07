@@ -22,7 +22,7 @@ import com.kesiyas.spring.instagram.user.model.User;
 public class UserRestController {
 	
 	@Autowired
-	UserBO userBO;
+	private UserBO userBO;
 
 	@PostMapping("/signup")
 	public Map<String, String> signup(
@@ -76,6 +76,7 @@ public class UserRestController {
 			
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("loginId", user.getLoginId());
+			session.setAttribute("nickname", user.getNickname());
 
 		} else {
 			map.put("result", "fail");

@@ -28,10 +28,12 @@
 					
 					<textarea id="contentInput" rows="7" class="form-control mt-3" placeholder="내용을 입력해주세요."></textarea>
 					
+					<!-- 이미지 업로드 -->
 					<div class="mt-4">
 						<label for="fileInput" class="btn btn-success text-white">업로드</label>
 						<input type="file" class="d-none" id="fileInput">
 					</div>
+					<!-- 이미지 업로드 -->
 					
 					<div class="d-flex justify-content-between mt-4">
 						<a href="/post/list/view" class="btn btn-secondary">취소</a>
@@ -47,15 +49,37 @@
 	<script>
 		$(document).ready(function(){
 			
-			${"#addBtn"}.on("click", function(){
-				let content = ${"#contentInput"}.val();
+			$("#addBtn").on("click", function(){
+				let content = $("#contentInput").val();
 				
 				if(content == "") {
 					alert("내용을 입력해주세요.");
 					return;
 				}
 				
+				var formData = new FormData();
+				formData.append("content", content);
+				formData.append("file", $("#fileInput")[0].files[0]);
 				
+				$.ajax({
+					type:"post"
+					, url:"/post/create"
+					, data:formData
+					, enctype:"multipart/form-data"
+					, processData:false
+					, contentType:false
+					, success:function(data){
+						if(data.result == "success") {
+							location.href = "/post/list/view";						
+						} else {
+							alert("게시글 작성 실패");
+						}
+					}
+					, error:function(){
+						alert("게시글 작성 오류");
+					}
+					
+				});
 			});
 			
 		});
