@@ -17,84 +17,146 @@
 <body>
 
 	<div class="container">
-		<c:import url="/WEB-INF/jsp/include/header.jsp"></c:import>
+		<header class="d-flex align-items-center justify-content-between">
+			<h2 class="ml-3 my-3">Instagram</h2>
+			
+			<!-- 검색 창 -->
+			<div class="search_form">	
+				<input type="text" class="form-control search_input" placeholder="검색" id="searchInput">															
+			
+				<div class="d-flex flex-column search-box">
+					<div class="d-none bg-white" id="recent_search">
+						<div class="search-box1 p-3">최근 검색 항목</div>
+						<div class="search-box2 d-flex justify-content-center align-items-center">
+							<div>최근 검색 내역 없음.</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+			<!-- 검색 창 -->
+			<div class="d-flex">
+				<c:choose>
+					<c:when test="${empty userId }">
+						<a href="/user/signin/view" class="mr-2 text-primary">Login</a>
+						<div class="text-info">계정을 잊으셨나요?</div>
+					</c:when>
+					<c:otherwise>
+						<a href="/user/signout" class="mr-3 text-primary">Logout</a>
+						<div>
+							<a href="/post/detail/view">
+								<img class="rounded-circle" height="30" width="30" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
+								<span class="font-weight-bold text-warning">${loginId }</span> 님
+							</a>
+						</div>
+					</c:otherwise>				
+				</c:choose>
+			</div>
+		</header>
 		
-		<section class="contents d-flex">
-			<article class="d-flex flex-column ml-4 my-5 col-7 align-items-center ">
-				<a href="/post/create/view" class="btn btn-primary text-white form-control w-50">게시글 작성</a>
-				<!-- timeline -->
-				<c:forEach var="timeLine" items="${timeLine}">
-				<div class="storyBox mt-5">
-					<div class="d-flex justify-content-between align-items-center m-3">
-						<div class="d-flex align-items-center">
-							<img class="rounded-circle mr-2" height="50" width="50" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
-							<div class="font-weight-bold">${loginId}</div>
-						</div>
-						<button type="button" class="btn btn-danger text-white">삭제</button>
-					</div>
-					<img src="${timeLine.imgPath }" width="100%" height="400" alt="포스트 사진">
-					
-					<!-- 좋아요 -->
-					<div class="ml-4 my-3">
-						<i class="bi bi-heart mr-4"></i> <span class="font-weight-bold">좋아요 5개</span>
-					</div>
-					<!-- 좋아요 -->
-					
-					<!-- 댓글들 -->
-					<div class="ml-3 my-3">
-						<div class="d-flex justify-content-between">
-							<div class="mt-2">
-								<span class="font-weight-bold">user 2</span> 
-								<span class="comment-margin">댓글1</span>
+		<main class="box1 align-items-center">
+			<section class="d-flex mt-5 contents">
+				<article class="d-flex flex-column align-items-center mr-4">
+					<a href="/post/create/view" class="btn btn-primary text-white form-control w-50">게시글 작성</a>
+					<!-- timeline -->
+					<c:forEach var="timeLine" items="${timeLine}">
+					<div class="storyBox mt-3">
+						<div class="d-flex justify-content-between align-items-center m-3">
+							<div class="d-flex align-items-center">
+								<img class="rounded-circle mr-2" height="50" width="50" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
+								<div class="font-weight-bold">${loginId}</div>
 							</div>
-							<i class="bi bi-heart mr-4"></i>					
+							<a type="button" href="/post/delete?id=${timeLine.id }" class="btn btn-danger text-white">삭제</a>
 						</div>
-						<div class="d-flex justify-content-between">
-							<div class="mt-2">
-								<span class="font-weight-bold">user 3</span> 
-								<span class="comment-margin">댓글2</span>
-							</div>
-							<i class="bi bi-heart mr-4"></i>					
-						</div>
-					</div>
-					<!-- 댓글들 -->
 						
-					<!-- 댓글 입력 -->
-					<div class="d-flex justify-content-between align-items-center m-3"> 
-						<input type="text" class="form-control col-8" placeholder="내용을 입력해주세요.">
-						<button type="button" class="btn btn-info text-white">게시</button>
+						<img src="${timeLine.imgPath }" width="100%" height="400" alt="포스트 사진">
+							
+						<!-- 좋아요 -->
+						<div class="ml-3 my-2">
+							<i class="bi bi-heart mr-1"></i> <span><small class="font-weight-bold">좋아요 5개</small></span>
+						</div>
+						<!-- 좋아요 -->
+						<div class="ml-3">${timeLine.content }</div>
+						
+						<!-- 댓글들 -->
+						<div class="ml-3 my-2">
+							<div class="d-flex justify-content-between">
+								<div class="mt-2">
+									<span class="font-weight-bold">user 2</span> 
+									<span class="comment-margin">댓글1</span>
+								</div>
+								<i class="bi bi-heart mr-4"></i>					
+							</div>
+							<div class="d-flex justify-content-between">
+								<div class="mt-2">
+									<span class="font-weight-bold">user 3</span> 
+									<span class="comment-margin">댓글2</span>
+								</div>
+								<i class="bi bi-heart mr-4"></i>					
+							</div>
+						</div>
+						<!-- 댓글들 -->
+							
+						<!-- 댓글 입력 -->
+						<div class="d-flex justify-content-between align-items-center m-3"> 
+							<input type="text" class="form-control col-8" placeholder="내용을 입력해주세요.">
+							<button type="button" class="btn btn-info text-white">게시</button>
+						</div>
+						<!-- 댓글 입력 -->
 					</div>
-					<!-- 댓글 입력 -->
-				</div>
-				</c:forEach>
-				<!-- timeline -->
-				
-			</article>
-			<article class="d-flex flex-column mr-5 my-3 col-5">
-				<div class="d-flex align-items-center mt-4">
-					<img class="rounded-circle mr-3" height="50" width="50" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
-
-					<div>
-						<div class="font-weight-bold">${loginId }</div>
-						<small class="font-weight-bold text-secondary">${nickname }</small>
-					</div>
-				</div>
-				<!-- 팔로우 목록 -->
-				<div class="d-flex flex-column align-items-center my-5">
-					<div class="text-center">팔로우 목록</div>
-					<ul class="col-7">
-						<li class="d-flex justify-content-between mt-3">user2 <span><a href="#">팔로우</a></span></li>
-						<li class="d-flex justify-content-between mt-3">user3 <span><a href="#">팔로우</a></span></li>
-						<li class="d-flex justify-content-between mt-3">user4 <span><a href="#">팔로우</a></span></li>
-					</ul>
-				</div>
-				<!-- 팔로우 목록 -->
-				<c:import url="/WEB-INF/jsp/include/footer.jsp"></c:import>
-			</article>
-		</section>
+					</c:forEach>
+					<!-- timeline -->
+					
+				</article>
+				<article class="ml-5">
+					<div class="d-flex align-items-center">
+						<img class="rounded-circle mr-3" height="50" width="50" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
 	
+						<div>
+							<div class="font-weight-bold">${loginId }</div>
+							<small class="font-weight-bold text-secondary">${nickname }</small>
+						</div>
+					</div>
+					<!-- 팔로우 목록 -->
+					<div class="my-5">
+						<div class="text-center text-info font-weight-bold ml-4">팔로우 목록</div>
+						<ul>
+							<li class="d-flex justify-content-between mt-3">user2 <span><a href="#">팔로우</a></span></li>
+							<li class="d-flex justify-content-between mt-3">user3 <span><a href="#">팔로우</a></span></li>
+							<li class="d-flex justify-content-between mt-3">user4 <span><a href="#">팔로우</a></span></li>
+						</ul>
+					</div>
+					<!-- 팔로우 목록 -->
+					
+					
+					<div class="text-center mt-3">
+						<small>© 2022 Instagram from Meta</small>
+					</div>	
+	
+				</article>
+			</section>
+		</main>
 		
 	</div>
 
+	<script>
+		$(document).ready(function(){
+			
+			// 최근 검색 항목 팝업 열기
+			$("#searchInput").on("click", function(){			
+				$("#recent_search").removeClass("d-none");		
+			});
+			
+			// 최근 검색 항목 팝업 닫기
+			$(document).on("mouseup", function(e){				
+				$("#recent_search").addClass("d-none");
+			});
+
+
+		});
+		
+	</script>
+
 </body>
+
+
 </html>

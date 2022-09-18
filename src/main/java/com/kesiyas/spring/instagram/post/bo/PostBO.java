@@ -35,5 +35,15 @@ public class PostBO {
 		
 		return postDAO.selectPost(userId);
 	}
+	
+	public int deletePost(int id, int userId) {
+		
+		return postDAO.deletePost(id, userId);
+	}
+	
+	public List<Post> userImgList(int userId) {
+		
+		return postDAO.selectPost(userId);
+	}
 
 }

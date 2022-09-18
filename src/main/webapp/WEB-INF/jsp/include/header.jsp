@@ -18,9 +18,7 @@
 								<span class="font-weight-bold text-warning">${loginId }</span> 님
 							</a>
 						</div>
-					</c:otherwise>
-				
-				
+					</c:otherwise>				
 				</c:choose>
 			</div>
 		</header>
