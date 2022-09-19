@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kesiyas.spring.instagram.common.FileManagerService;
 import com.kesiyas.spring.instagram.post.dao.PostDAO;
 import com.kesiyas.spring.instagram.post.model.Post;
+import com.kesiyas.spring.instagram.post.model.PostDetail;
+import com.kesiyas.spring.instagram.user.bo.UserBO;
 import com.kesiyas.spring.instagram.user.model.User;
 
 @Service
@@ -16,6 +18,10 @@ public class PostBO {
 	@Autowired
 	private PostDAO postDAO;
 	
+	@Autowired
+	private UserBO userBO;
+	
+	// 포스트 작성
 	public int addPost(String content, MultipartFile file, int userId) {		
 		String imgPath = null;
 		
@@ -32,30 +38,44 @@ public class PostBO {
 		return postDAO.insertPost(content, imgPath, userId);
 	}
 	
-	public List<Post> getTimeLine(int userId) {
-		
+	public List<Post> getPostList(int userId) {
+				
 		return postDAO.selectPost(userId);
 	}
 	
+	public List<PostDetail> getPost(){
+		// 게시글 하나당 작성자 정보를 조합하는 과정
+		List<Post> postList = postDAO.selectPost();
+		
+		for(Post post : postList) {
+			
+			int userId = post.getUserId();
+			User user = userBO.getUserById(userId);
+			
+			PostDetail postDetail = new PostDetail();
+			postDetail.setPost(post);
+			postDetail.setUser(user);
+			
+		}
+		
+		return ;
+	}
+	
+	// 포스트 삭제
 	public int deletePost(int id, int userId) {
 		
 		return postDAO.deletePost(id, userId);
-	}
+	}		
 	
-	public List<Post> userImgList(int userId) {
-		
-		return postDAO.selectPost(userId);
-	}
-	
-	public List<User> searchUser(String loginId) {
+	// 사용자 검색
+	public User searchUser(String loginId) {
 		
 		return postDAO.selectSearchUser(loginId);
 	}
-	
-	public List<Post> otherUserPage(int id) {
 		
-		return postDAO.selectOtherUser(id);
+	public User getUserData(int userId) {
+		
+		return postDAO.selectOtherUser(userId);
 	}
 	
-
 }

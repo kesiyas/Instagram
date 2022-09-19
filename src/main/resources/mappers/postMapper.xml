@@ -40,6 +40,8 @@
 			`userId` = #{userId}
 	</select>
 	
+	
+	
 	<delete id="deletePost" parameterType="int">
 		DELETE 
 		FROM
@@ -50,28 +52,26 @@
 	</delete>
 	
 	<select id="selectSearchUser" parameterType="String" resultType="com.kesiyas.spring.instagram.user.model.User">
-		SELECT
+		SELECT 
+			`id`
+			, `loginId`
+		FROM
+			`user`
+		WHERE 
+			`loginId` = #{loginId}
+	
+	</select>
+	
+	<select id="selectOtherUser" parameterType="int" resultType="com.kesiyas.spring.instagram.user.model.User">
+		SELECT 
 			`id`
 			, `loginId`
 			, `nickname`
-		FROM
+		FROM 
 			`user`
-		WHERE
-		 	`loginId` LIKE CONCAT(#{loginId}, '%')
+		WHERE 
+			`id` = #{userId}
+	</select>	
 	
-	</select>
-	
-	<select id="selectOtherUser" parameterType="int" resultType="com.kesiyas.spring.instagram.post.model.Post">
-		SELECT
-			`id`
-			, `userId`
-			, `content`
-			, `imgPath`
-			, `createdAt`
-			, `updatedAt`
-		FROM
-			`post`
-		WHERE
-			`userId` = #{id}
-	</select>
+	 
 </mapper>

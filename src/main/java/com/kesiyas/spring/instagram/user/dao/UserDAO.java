@@ -21,4 +21,6 @@ public interface UserDAO {
 	
 	// 계정 찾기
 	public User selectLoginId(@Param("name") String name, @Param("nickname") String nickname);
+
+	public User selectUserById(@Param("id") int id);
 }

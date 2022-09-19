@@ -71,5 +71,21 @@
 			`nickname` = #{nickname}	
 	</select>
 	
+	<select id="selectUserById" parameterType="int" resultType="com.kesiyas.spring.instagram.user.model.User">
+		SELECT
+			`id`
+			, `loginId`
+			, `password`
+			, `name`
+			, `nickname`
+			, `phoneNumber`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`user`
+		WHERE
+			`id` = #{id}
+		
+	</select>
 	
 </mapper>

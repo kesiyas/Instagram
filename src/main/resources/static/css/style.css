@@ -1,17 +1,20 @@
 @charset "UTF-8";
 
+.container a {
+	text-decoration: none;
+}
+
 header {
 	border: solid 3px white;
  	border-bottom-color: #dddddd;
 }
 
-.search_form {
+header .search_form {
     align-items: center;
     display: flex;
     flex: 0 1 auto;
     flex-direction: column;
-	height:36px;
-    min-width: 125px;
+	height:34px;
     position: relative;
     width: 268px;
 }
@@ -23,28 +26,27 @@ header {
     box-sizing: border-box;
     color: rgb(var(--ig-primary-text));
     font-size: var(--system-16-font-size);
-    height:31;
     outline: none;
     padding: 3px 16px;
-    width:100%;
+    width:280px;
     z-index: 2;
 }
 
-.search-box {
-	margin-top:26px;
+.search_form > .search-box {
+	margin-top:24px;
 	width: 360px;
 	border-radius: 8px;
 	z-index:2;
 	border:1px solid #f7f5f0;
 }
 
-.search-box1 {
+.search-box .search-box1 {
 	height:60px;
 	font-size:14px;
 	font-weight: bold;
 }
 
-.search-box2 {
+.search-box .search-box2 {
 	height:260px;
 	font-size:14px;
 	font-weight: bold;
@@ -65,6 +67,11 @@ header {
 
 .contents {
 	
+}
+
+.contents .create_post{
+	width:250px;
+	border-radius: 8px;
 }
 	
 .contents .content-margin {
@@ -117,17 +124,17 @@ header {
 	width:350px;
 }
 
-.nickname_font {
+.detail_nickname_font {
 	font-size:20px;
 	color:#d1cfcf;
 }
 
-.detail_1_style {
+.detail_style_1 {
 	width:310px;
 	font-weight: bold;
 }
 
-.imgBox	{
+.detail_imgBox	{
 	margin-top:20px;
 	border:1px solid #edebeb;
 }

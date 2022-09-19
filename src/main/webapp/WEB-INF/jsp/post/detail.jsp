@@ -15,16 +15,16 @@
 </head>
 <body>
 	<div class="container">
-		<c:import url="/WEB-INF/jsp/include/header.jsp"></c:import>
+		<c:import url="/WEB-INF/jsp/include/header_search.jsp"></c:import>
 		
 		<section>
 			<!-- 프로필 정보 -->
 			<div class="d-flex mt-4 ml-5">
 				<img class="rounded-circle mr-2" height="140" width="140" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
 				<div class="ml-4 mt-3">
-					<div><h3>${list.loginId }</h3></div>
-					<div class="nickname_font">${list.nickname }</div>
-					<div class="d-flex mt-3 justify-content-between detail_1_style">
+					<div><h3>${user.loginId }</h3></div>
+					<div class="detail_nickname_font">${user.nickname }</div>
+					<div class="d-flex mt-3 justify-content-between detail_style_1">
 						<div>게시물 40</div> 
 						<div>팔로워 20</div> 
 						<div>팔로우 30</div>
@@ -42,7 +42,7 @@
 				
 					<div class="d-flex flex-wrap justify-content-between mt-5 col-11">
 						<c:forEach var="imgList" items="${list }">
-							<div class="imgBox">
+							<div class="detail_imgBox">
 								<img width="250" height="250" src="${imgList.imgPath }" alt="사용자 포스트 이미지">
 							</div>
 						</c:forEach>
@@ -54,5 +54,41 @@
 	
 		<c:import url="/WEB-INF/jsp/include/footer.jsp"></c:import>
 	</div>
+	
+	<script>
+	// 최근 검색 항목 팝업 열기
+	$("#searchInput").on("click", function(){			
+		$("#recent_search").removeClass("d-none");		
+	});
+	
+	// 최근 검색 항목 팝업 닫기
+	$(document).on("mouseup", function(e){				
+		$("#recent_search").addClass("d-none");
+	});
+	
+	$("#searchForm").on("submit", function(e){
+		
+		e.preventDefault();
+		
+		let loginId = $("#searchInput").val();
+		
+		$.ajax({
+			type:"get"
+			, url:"/post/search"
+			, data:{"loginId":loginId}
+			, success:function(data){
+				if(data.id != null) {
+					location.href="/post/detail/view?userId=" + data.id;
+				} else {
+					alert("사용자 검색 실패");
+				}
+			}
+			, error:function(){
+				
+				alert("사용자 검색 에러");
+			}		
+		});	
+	});
+	</script>
 </body>
 </html>

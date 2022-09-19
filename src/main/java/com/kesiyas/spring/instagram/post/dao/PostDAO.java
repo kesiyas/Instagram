@@ -1,6 +1,7 @@
 package com.kesiyas.spring.instagram.post.dao;
 
-import java.util.List;
+import java.util.List
+;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,7 @@ public interface PostDAO {
 	
 	public int deletePost(@Param("id") int id, @Param("userId") int userId);
 
-	public List<User> selectSearchUser(@Param("loginId") String loginId);
+	public User selectSearchUser(@Param("loginId") String loginId);
 	
-	public List<Post> selectOtherUser(@Param("id") int id);
-}
+	public User selectOtherUser(@Param("userId") int userId);
+};

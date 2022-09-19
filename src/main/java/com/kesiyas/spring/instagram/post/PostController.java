@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kesiyas.spring.instagram.post.bo.PostBO;
 import com.kesiyas.spring.instagram.post.model.Post;
+import com.kesiyas.spring.instagram.user.model.User;
 
 @Controller
 @RequestMapping("/post")
@@ -26,19 +27,21 @@ public class PostController {
 		return "post/create";
 	}
 	
+	// 타임라인 정보 가져오기
 	@GetMapping("/list/view")
 	public String timeLine(Model model, HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
 		int userId  = (Integer)session.getAttribute("userId");
 		
-		List<Post> post = postBO.getTimeLine(userId);
+		List<Post> post = postBO.getPostList(userId);
 		
 		model.addAttribute("timeLine", post);
 		
 		return "post/list";
 	}
 	
+	// 게시글 삭제
 	@GetMapping("/delete")
 	public String deletePost(@RequestParam("id") int id, HttpServletRequest request) {
 		
@@ -54,29 +57,22 @@ public class PostController {
 		}	
 	}
 	
-
-	@GetMapping("/detail/view")
-	public String userDetailPage(Model model, HttpServletRequest request) {
+	// 사용자 페이지로 이동
+	@GetMapping("/detail/view") 
+	public String userDetailPage(Model model, @RequestParam("userId") int userId) {
 		
-		HttpSession session = request.getSession();
+		User user = postBO.getUserData(userId);
 		
-		int userId = (Integer)session.getAttribute("userId");
-		
-		List<Post> list = postBO.userImgList(userId);
+		List<Post> list = postBO.getPostList(userId);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("user", user);
 		
 		return "post/detail";
+		
 	}
+	
+	
 				
-	@GetMapping("/detail/other")
-	public String otherUserPage(@RequestParam("id") int id, Model model) {
-		
-		List<Post> post = postBO.otherUserPage(id);
-		
-		model.addAttribute("list", post);
-		
-		return "post/detail";
-	}
 	
 }

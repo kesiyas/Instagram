@@ -6,11 +6,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileManagerService {
 
-	public static final String FILE_UPLOAD_PATH = "E:\\정민우\\spring\\test\\instagramfile\\upload";
+	public static final String FILE_UPLOAD_PATH = "D:\\정민우\\spring\\test\\instagramfile";
+	
+	// 로그를 추가하기 위한 객체 생성
+	private static Logger logger = LoggerFactory.getLogger(FileManagerService.class);
 	
 	public static String saveFile(int userId, MultipartFile file) {
 		
@@ -22,6 +27,7 @@ public class FileManagerService {
 		
 		if(directory.mkdir() == false) {
 			// 디렉토리 생성 실패!
+			logger.error("FileManagerService - saveFile : file 디렉토리 생성 에러 " + filePath);
 			return null;
 		}
 		
@@ -35,6 +41,7 @@ public class FileManagerService {
 			e.printStackTrace();
 			
 			// 파일 저장 실패
+			logger.error("FileManagerService - saveFile : 파일 저장 실패");
 			return null;
 		}
 		
