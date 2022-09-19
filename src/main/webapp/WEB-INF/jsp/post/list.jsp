@@ -22,8 +22,9 @@
 			
 			<!-- 검색 창 -->
 			<div class="search_form">	
-				<input type="text" class="form-control search_input" placeholder="검색" id="searchInput">															
-			
+				<form id="searchForm">
+					<input type="text" class="form-control search_input" placeholder="검색" id="searchInput">															
+				</form>
 				<div class="d-flex flex-column search-box">
 					<div class="d-none bg-white" id="recent_search">
 						<div class="search-box1 p-3">최근 검색 항목</div>
@@ -126,8 +127,7 @@
 						</ul>
 					</div>
 					<!-- 팔로우 목록 -->
-					
-					
+									
 					<div class="text-center mt-3">
 						<small>© 2022 Instagram from Meta</small>
 					</div>	
@@ -149,6 +149,33 @@
 			// 최근 검색 항목 팝업 닫기
 			$(document).on("mouseup", function(e){				
 				$("#recent_search").addClass("d-none");
+			});
+			
+			$("#searchForm").on("submit", function(e){
+				
+				e.preventDefault();
+				
+				let loginId = $("#searchInput").val();
+				
+				$.ajax({
+					type:"get"
+					, url:"/post/search"
+					, data:{"loginId":loginId}
+					, success:function(data){
+						if(data.result == "success") {
+							alert("사용자 검색 성공");
+						} else {
+							alert("사용자 검색 실패");
+						}
+					}
+					, error:function(){
+						
+						alert("사용자 검색 에러");
+					}
+					
+				});
+				
+				
 			});
 
 

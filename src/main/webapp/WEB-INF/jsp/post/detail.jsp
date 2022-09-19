@@ -22,8 +22,8 @@
 			<div class="d-flex mt-4 ml-5">
 				<img class="rounded-circle mr-2" height="140" width="140" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
 				<div class="ml-4 mt-3">
-					<div><h3>${loginId }</h3></div>
-					<div class="nickname_font">${nickname }</div>
+					<div><h3>${list.loginId }</h3></div>
+					<div class="nickname_font">${list.nickname }</div>
 					<div class="d-flex mt-3 justify-content-between detail_1_style">
 						<div>게시물 40</div> 
 						<div>팔로워 20</div> 
@@ -41,7 +41,7 @@
 					</div>
 				
 					<div class="d-flex flex-wrap justify-content-between mt-5 col-11">
-						<c:forEach var="imgList" items="${imgList }">
+						<c:forEach var="imgList" items="${list }">
 							<div class="imgBox">
 								<img width="250" height="250" src="${imgList.imgPath }" alt="사용자 포스트 이미지">
 							</div>

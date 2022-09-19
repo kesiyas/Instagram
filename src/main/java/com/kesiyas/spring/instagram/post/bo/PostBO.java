@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kesiyas.spring.instagram.common.FileManagerService;
 import com.kesiyas.spring.instagram.post.dao.PostDAO;
 import com.kesiyas.spring.instagram.post.model.Post;
+import com.kesiyas.spring.instagram.user.model.User;
 
 @Service
 public class PostBO {
@@ -45,5 +46,16 @@ public class PostBO {
 		
 		return postDAO.selectPost(userId);
 	}
+	
+	public List<User> searchUser(String loginId) {
+		
+		return postDAO.selectSearchUser(loginId);
+	}
+	
+	public List<Post> otherUserPage(int id) {
+		
+		return postDAO.selectOtherUser(id);
+	}
+	
 
 }

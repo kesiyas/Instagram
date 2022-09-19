@@ -54,12 +54,7 @@ public class PostController {
 		}	
 	}
 	
-	@GetMapping("/search")
-	public String searchUser(@RequestParam("loginId") String loginId) {
-		
-		return "";
-	}
-	
+
 	@GetMapping("/detail/view")
 	public String userDetailPage(Model model, HttpServletRequest request) {
 		
@@ -67,12 +62,21 @@ public class PostController {
 		
 		int userId = (Integer)session.getAttribute("userId");
 		
-		List<Post> imgList = postBO.userImgList(userId);
+		List<Post> list = postBO.userImgList(userId);
 		
-		model.addAttribute("imgList", imgList);
+		model.addAttribute("list", list);
 		
 		return "post/detail";
 	}
+				
+	@GetMapping("/detail/other")
+	public String otherUserPage(@RequestParam("id") int id, Model model) {
 		
+		List<Post> post = postBO.otherUserPage(id);
+		
+		model.addAttribute("list", post);
+		
+		return "post/detail";
+	}
 	
 }

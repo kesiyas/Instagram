@@ -70,4 +70,6 @@
 			`name` = #{name} AND
 			`nickname` = #{nickname}	
 	</select>
+	
+	
 </mapper>

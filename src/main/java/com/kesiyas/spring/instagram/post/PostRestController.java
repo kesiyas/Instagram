@@ -1,6 +1,7 @@
 package com.kesiyas.spring.instagram.post;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kesiyas.spring.instagram.post.bo.PostBO;
+import com.kesiyas.spring.instagram.user.model.User;
 
 @RestController
 @RequestMapping("/post")
@@ -43,6 +45,23 @@ public class PostRestController {
 		}
 		
 		return result;
+	}
+	
+	@GetMapping("/search")
+	public Map<String, String> searchUser(@RequestParam("loginId") String loginId) {
+		
+		List<User> user = postBO.searchUser(loginId);
+		
+		Map<String, String> result = new HashMap<>();
+		
+		if(user != null) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		
+		return result;
+		
 	}
 	
 	
