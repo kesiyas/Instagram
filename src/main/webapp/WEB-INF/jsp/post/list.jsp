@@ -73,7 +73,7 @@
 						<!-- 댓글 입력 -->
 						<div class="d-flex justify-content-between align-items-center m-3"> 
 							<input type="text" class="form-control col-8" placeholder="내용을 입력해주세요." id="commentInput">
-							<button type="button" class="btn btn-info text-white" id="commentBtn">게시</button>
+							<button type="button" class="btn btn-info text-white" id="${postDetail.post.id}">게시</button>
 						</div>
 						<!-- 댓글 입력 -->
 					</div>
@@ -116,7 +116,7 @@
 		$(document).ready(function(){
 			
 			// 댓글 작성
-			$("#commentBtn").on("click", function(){
+			$().on("click", function(){
 				let content = $("#commentInput").val();
 				let postId = $("#postId").val();
 					
