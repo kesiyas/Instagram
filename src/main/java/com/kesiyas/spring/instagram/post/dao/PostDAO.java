@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.kesiyas.spring.instagram.post.model.Post;
+import com.kesiyas.spring.instagram.post.model.PostDetail;
 import com.kesiyas.spring.instagram.user.model.User;
 
 @Repository
@@ -18,6 +19,8 @@ public interface PostDAO {
 			, @Param("userId") int userId);
 	
 	public List<Post> selectPost(@Param("userId") int userId);
+	
+	public List<Post> selectPost();
 	
 	public int deletePost(@Param("id") int id, @Param("userId") int userId);
 

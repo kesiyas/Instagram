@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kesiyas.spring.instagram.post.bo.PostBO;
 import com.kesiyas.spring.instagram.post.model.Post;
+import com.kesiyas.spring.instagram.post.model.PostDetail;
 import com.kesiyas.spring.instagram.user.model.User;
 
 @Controller
@@ -34,7 +35,7 @@ public class PostController {
 		HttpSession session = request.getSession();
 		int userId  = (Integer)session.getAttribute("userId");
 		
-		List<Post> post = postBO.getPostList(userId);
+		List<PostDetail> post = postBO.getPost();
 		
 		model.addAttribute("timeLine", post);
 		
