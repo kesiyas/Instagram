@@ -30,14 +30,11 @@ public class PostController {
 	
 	// 타임라인 정보 가져오기
 	@GetMapping("/list/view")
-	public String timeLine(Model model, HttpServletRequest request) {
+	public String timeLine(Model model) {
 		
-		HttpSession session = request.getSession();
-		int userId  = (Integer)session.getAttribute("userId");
+		List<PostDetail> postList = postBO.getPost();
 		
-		List<PostDetail> post = postBO.getPost();
-		
-		model.addAttribute("timeLine", post);
+		model.addAttribute("postList", postList);			
 		
 		return "post/list";
 	}

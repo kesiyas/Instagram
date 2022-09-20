@@ -26,7 +26,7 @@
 		)
 	</insert>
 	
-	<select id="selectPost" parameterType="int" resultType="com.kesiyas.spring.instagram.post.model.Post">
+	<select id="selectPostList" parameterType="int" resultType="com.kesiyas.spring.instagram.post.model.Post">
 		SELECT
 			`id`
 			, `userId`
@@ -39,15 +39,27 @@
 		WHERE
 			`userId` = #{userId}
 	</select>
-	
-	
-	
+		
+	<select id="selectPost" resultType="com.kesiyas.spring.instagram.post.model.Post">
+		SELECT
+			`id`
+			, `userId`
+			, `content`
+			, `imgPath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+		ORDER BY `id` DESC
+	</select>	
+		
 	<delete id="deletePost" parameterType="int">
 		DELETE 
 		FROM
 			`post`
 		WHERE
-			`id` = #{id} AND
+			`id` = #{id}
+			AND
 			`userId` = #{userId}
 	</delete>
 	

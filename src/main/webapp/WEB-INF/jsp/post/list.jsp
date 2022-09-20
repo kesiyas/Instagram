@@ -26,48 +26,54 @@
 						<a href="/post/create/view" class="btn btn-primary text-white form-control">게시글 작성</a>
 					</div>
 					<!-- timeline -->
-					<c:forEach var="timeLine" items="${timeLine}">
+					<c:forEach var="postDetail" items="${postList}">				
 					<div class="storyBox mt-3">
 						<div class="d-flex justify-content-between align-items-center m-3">
 							<div class="d-flex align-items-center">
 								<img class="rounded-circle mr-2" height="50" width="50" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
-								<div class="font-weight-bold">${loginId}</div>
+								<div class="font-weight-bold">${postDetail.user.loginId}</div>
 							</div>
-							<a type="button" href="/post/delete?id=${timeLine.id }" class="btn btn-danger text-white">삭제</a>
+														
+							<!-- 로그인한 사용자의 포스트에만 삭제버튼 나오게 하기 -->					
+							<c:set var="id" value="${postDetail.user.id}" />
+							<c:set var="userId" value="${userId}" />						
+							<c:choose>
+								<c:when test="${id == userId}">
+									<a type="button" href="/post/delete?id=${postDetail.post.id }" class="btn btn-danger text-white">삭제</a>
+								</c:when>
+								<c:otherwise></c:otherwise>
+							</c:choose>
 						</div>
 						
-						<img src="${timeLine.imgPath }" width="100%" height="400" alt="포스트 사진">
+						<img src="${postDetail.post.imgPath }" width="100%" height="400" alt="포스트 사진">
 							
 						<!-- 좋아요 -->
 						<div class="ml-3 my-2">
 							<i class="bi bi-heart mr-1"></i> <span><small class="font-weight-bold">좋아요 5개</small></span>
 						</div>
 						<!-- 좋아요 -->
-						<div class="ml-3">${timeLine.content }</div>
+						<div class="ml-3">${postDetail.post.content }</div>
 						
 						<!-- 댓글들 -->
 						<div class="ml-3 my-2">
-							<div class="d-flex justify-content-between">
-								<div class="mt-2">
-									<span class="font-weight-bold">user 2</span> 
-									<span class="comment-margin">댓글1</span>
+							<input type="hidden" id="postId" value="${postDetail.post.id}">
+							<c:forEach var="commentList" items="${postDetail.comment }">
+								<div class="d-flex justify-content-between">	
+										<div class="mt-2">
+											<span class="font-weight-bold">${commentList.loginId }</span> 
+											<span class="comment-margin">${commentList.content }</span>
+										</div>
+									<i class="bi bi-heart mr-4"></i>					
 								</div>
-								<i class="bi bi-heart mr-4"></i>					
-							</div>
-							<div class="d-flex justify-content-between">
-								<div class="mt-2">
-									<span class="font-weight-bold">user 3</span> 
-									<span class="comment-margin">댓글2</span>
-								</div>
-								<i class="bi bi-heart mr-4"></i>					
-							</div>
+							</c:forEach>
+							
 						</div>
 						<!-- 댓글들 -->
 							
 						<!-- 댓글 입력 -->
 						<div class="d-flex justify-content-between align-items-center m-3"> 
-							<input type="text" class="form-control col-8" placeholder="내용을 입력해주세요.">
-							<button type="button" class="btn btn-info text-white">게시</button>
+							<input type="text" class="form-control col-8" placeholder="내용을 입력해주세요." id="commentInput">
+							<button type="button" class="btn btn-info text-white" id="commentBtn">게시</button>
 						</div>
 						<!-- 댓글 입력 -->
 					</div>
@@ -75,6 +81,7 @@
 					<!-- timeline -->
 					
 				</article>
+				
 				<article class="ml-5">
 					<div class="d-flex align-items-center">
 						<img class="rounded-circle mr-3" height="50" width="50" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
@@ -107,6 +114,33 @@
 
 	<script>
 		$(document).ready(function(){
+			
+			// 댓글 작성
+			$("#commentBtn").on("click", function(){
+				let content = $("#commentInput").val();
+				let postId = $("#postId").val();
+					
+				if(content == "") {
+					alert("내용을 입력해주세요.");
+					return ;
+				}
+				
+				$.ajax({
+					type:"post"
+					, url:"/comment/add"
+					, data:{"postId":postId, "content":content}
+					, success:function(data){				
+						if(data.result == "success") {
+							alert(content);
+						}else{
+							alert("댓글 작성 실패");
+						}
+					}
+					, error:function(){
+						alert("댓글 작성 에러");
+					}						
+				});
+			});
 			
 			// 최근 검색 항목 팝업 열기
 			$("#searchInput").on("click", function(){			

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kesiyas.spring.instagram.comment.dao.CommentDAO">
+	<insert id="insertComment" parameterType="map">
+		INSERT INTO
+			`comment`
+		(
+			`userId`
+			, `postId`
+			, `loginId`
+			, `content`
+			, `createdAt`
+			, `updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{postId}
+			, #{loginId}
+			, #{content}
+			, now()
+			, now()
+		)
+	</insert>
+	
+	<select id="selectCommentById" parameterType="int" resultType="com.kesiyas.spring.instagram.comment.model.Comment">
+		SELECT
+			`id`
+			, `userId`	
+			, `postId`
+			, `loginId`
+			, `content`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`comment`
+		WHERE 
+		 	`postId` = #{id}
+	</select>
+
+</mapper>
