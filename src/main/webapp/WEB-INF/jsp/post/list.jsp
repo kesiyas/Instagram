@@ -46,24 +46,22 @@
 						</div>
 						
 						<img src="${postDetail.post.imgPath }" width="100%" height="400" alt="포스트 사진">
-							
+								
 						<!-- 좋아요 -->
-						<div class="ml-3 my-2">
-							<i class="bi bi-heart mr-1"></i> <span><small class="font-weight-bold">좋아요 5개</small></span>
-						</div>
+						<div class="p-2 mt-1" id="like-Div${postDetail.post.id }">
+							<a href="#" class="mr-1 like-Btn" data-post-id="${postDetail.post.id}"><i class="bi bi-heart"></i></a> <span><small class="font-weight-bold">좋아요 ${postDetail.heartCount }개</small></span>
+						</div>			
 						<!-- 좋아요 -->
-						<div class="ml-3">${postDetail.post.content }</div>
+					
+						<div class="content-font-size ml-2 mt-1">${postDetail.post.content }</div>
 						
 						<!-- 댓글들 -->
-						<div class="ml-3 my-2">
-							<input type="hidden" id="postId" value="${postDetail.post.id}">
+						<div class="p-2">
 							<c:forEach var="commentList" items="${postDetail.comment }">
-								<div class="d-flex justify-content-between">	
-										<div class="mt-2">
-											<span class="font-weight-bold">${commentList.loginId }</span> 
-											<span class="comment-margin">${commentList.content }</span>
-										</div>
-									<i class="bi bi-heart mr-4"></i>					
+								<div class="d-flex align-items-center justify-content-between mt-2">		
+									<div class="font-weight-bold col-2 comment-font-size">${commentList.loginId }</div> 
+									<div class="col-7 comment-font-size">${commentList.content }</div>
+									<div><i class="bi bi-heart col-2"></i></div>						
 								</div>
 							</c:forEach>
 							
@@ -71,9 +69,9 @@
 						<!-- 댓글들 -->
 							
 						<!-- 댓글 입력 -->
-						<div class="d-flex justify-content-between align-items-center m-3"> 
-							<input type="text" class="form-control col-8" placeholder="내용을 입력해주세요." id="commentInput">
-							<button type="button" class="btn btn-info text-white" id="${postDetail.post.id}">게시</button>
+						<div class="d-flex justify-content-between align-items-center p-2"> 
+							<input type="text" class="form-control col-9" placeholder="내용을 입력해주세요." id="commentInput${postDetail.post.id }">
+							<button type="button" class="comment-Btn btn btn-info text-white" data-post-id="${postDetail.post.id }">게시</button>
 						</div>
 						<!-- 댓글 입력 -->
 					</div>
@@ -114,11 +112,54 @@
 
 	<script>
 		$(document).ready(function(){
+
+			// 좋아요 클릭
+			$(".like-Btn").on("click", function(e){
 			
-			// 댓글 작성
-			$().on("click", function(){
-				let content = $("#commentInput").val();
-				let postId = $("#postId").val();
+				e.preventDefault();
+				let postId = $(this).data("post-id");			
+							
+				$.ajax({
+					type:"get"
+					, url:"/post/is_heart"
+					, data:{"postId":postId}
+					, success:function(data){
+						if(data.result == "success") {
+							location.reload();
+							
+						} else {
+							
+						}
+					}
+					, error:function(){
+						alert("중복 체크 에러");
+					}
+				});
+					
+				$.ajax({
+					type:"get"
+					, url:"/post/like"
+					, data:{"postId":postId}
+					, success:function(data){
+						if(data.result) {													
+							location.reload();							
+						} else {
+							alert("좋아요 실패");
+						}
+					}
+					, error:function(){
+						alert("좋아요 에러");
+					}
+					
+				});	
+				
+			
+			});
+			
+			// 댓글 작성 버튼
+			$(".comment-Btn").on("click", function(){
+				let postId = $(this).data("post-id");
+				let content = $("#commentInput" + postId).val();
 					
 				if(content == "") {
 					alert("내용을 입력해주세요.");
@@ -129,16 +170,17 @@
 					type:"post"
 					, url:"/comment/add"
 					, data:{"postId":postId, "content":content}
-					, success:function(data){				
+					, success:function(data) {
 						if(data.result == "success") {
-							alert(content);
-						}else{
+							location.reload();
+						} else {
 							alert("댓글 작성 실패");
 						}
-					}
-					, error:function(){
+					}	
+					,error:function(){
 						alert("댓글 작성 에러");
-					}						
+					}
+										
 				});
 			});
 			
@@ -172,16 +214,10 @@
 					, error:function(){
 						
 						alert("사용자 검색 에러");
-					}
-					
-				});
-				
-				
+					}				
+				});				
 			});
-
-
-		});
-		
+		});		
 	</script>
 
 </body>

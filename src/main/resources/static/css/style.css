@@ -124,6 +124,14 @@ header .search_form {
 	width:350px;
 }
 
+.content-font-size {
+	font-size:15px;
+}
+
+.comment-font-size {
+	font-size:13px;
+}
+
 .detail_nickname_font {
 	font-size:20px;
 	color:#d1cfcf;

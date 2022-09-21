@@ -11,6 +11,7 @@ import com.kesiyas.spring.instagram.comment.bo.CommentBO;
 import com.kesiyas.spring.instagram.comment.model.Comment;
 import com.kesiyas.spring.instagram.common.FileManagerService;
 import com.kesiyas.spring.instagram.post.dao.PostDAO;
+import com.kesiyas.spring.instagram.post.heart.bo.HeartBO;
 import com.kesiyas.spring.instagram.post.model.Post;
 import com.kesiyas.spring.instagram.post.model.PostDetail;
 import com.kesiyas.spring.instagram.user.bo.UserBO;
@@ -26,6 +27,9 @@ public class PostBO {
 	
 	@Autowired 
 	private CommentBO commentBO;
+	
+	@Autowired
+	private HeartBO heartBO;
 	
 	// 포스트 작성
 	public int addPost(String content, MultipartFile file, int userId) {		
@@ -60,12 +64,14 @@ public class PostBO {
 			int postId = post.getId();
 			int userId = post.getUserId();
 			User user = userBO.getUserById(userId);
-			List<Comment> comment = commentBO.getCommentById(postId);
+			List<Comment> comment = commentBO.getCommentById(postId);		
+			int heartCount = heartBO.getHeartCount(postId);
 		
 			PostDetail postDetail = new PostDetail();
 			postDetail.setPost(post);
 			postDetail.setUser(user);	
 			postDetail.setComment(comment);
+			postDetail.setHeartCount(heartCount);
 						
 			postDetailList.add(postDetail);
 		}

@@ -10,7 +10,8 @@ public class PostDetail {
 	private Post post;
 	private User user;
 	private List<Comment> comment;
-	
+	private int heartCount;
+		
 	public Post getPost() {
 		return post;
 	}
@@ -28,5 +29,11 @@ public class PostDetail {
 	}
 	public void setComment(List<Comment> comment) {
 		this.comment = comment;
+	}
+	public int getHeartCount() {
+		return heartCount;
+	}
+	public void setHeartCount(int heartCount) {
+		this.heartCount = heartCount;
 	}
 }
