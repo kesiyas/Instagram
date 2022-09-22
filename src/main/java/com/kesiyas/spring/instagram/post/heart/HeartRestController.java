@@ -27,36 +27,36 @@ public class HeartRestController {
 	
 		HttpSession session = request.getSession();
 		int userId = (Integer)session.getAttribute("userId");
+				
+		Map<String, String> result = new HashMap<>();
+		
+		int count = heartBO.like(postId, userId);		
+				
+		if(count == 1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+					
+		return result;
+	}
+	
+	@GetMapping("/unlike")
+	public Map<String, String> unLike(@RequestParam("postId") int postId, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		int userId = (Integer)session.getAttribute("userId");
 		
 		Map<String, String> result = new HashMap<>();
-			
-		int count = heartBO.like(postId, userId);
+		
+		int count = heartBO.unLike(postId, userId);
 		
 		if(count == 1) {
 			result.put("result", "success");
 		} else {
 			result.put("result", "fail");
 		}
-		
-		return result;
-	}
-	
-	@GetMapping("/is_heart")
-	public Map<String, String> isDuplicateLike(@RequestParam("postId") int postId, HttpServletRequest request){
-
-		HttpSession session = request.getSession();
-		int userId = (Integer)session.getAttribute("userId");
-		
-		Map<String, String> result = new HashMap<>();
-		
-		Heart heart = heartBO.isDuplicateLike(postId, userId);
-			
-		if(heart != null ) {
-			result.put("result", "seccess");
-		} else {
-			result.put("result", "fail");
-		}
-		
+					
 		return result;
 		
 	}

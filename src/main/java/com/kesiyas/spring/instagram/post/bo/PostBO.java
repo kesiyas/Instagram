@@ -2,6 +2,7 @@ package com.kesiyas.spring.instagram.post.bo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import com.kesiyas.spring.instagram.post.dao.PostDAO;
 import com.kesiyas.spring.instagram.post.heart.bo.HeartBO;
 import com.kesiyas.spring.instagram.post.model.Post;
 import com.kesiyas.spring.instagram.post.model.PostDetail;
+import com.kesiyas.spring.instagram.post.model.PostDetailPage;
 import com.kesiyas.spring.instagram.user.bo.UserBO;
 import com.kesiyas.spring.instagram.user.model.User;
 
@@ -53,7 +55,7 @@ public class PostBO {
 		return postDAO.selectPostList(userId);
 	}
 	
-	public List<PostDetail> getPost(){
+	public List<PostDetail> getPost(int loginUserId){
 		// 게시글 하나당 작성자 정보를 조합하는 과정
 		List<Post> postList = postDAO.selectPost();
 		
@@ -62,16 +64,22 @@ public class PostBO {
 		for(Post post : postList) {
 			
 			int postId = post.getId();
+			
+			// 해당하는 게시글의 작성자
 			int userId = post.getUserId();
 			User user = userBO.getUserById(userId);
+			
 			List<Comment> comment = commentBO.getCommentById(postId);		
+			
 			int heartCount = heartBO.getHeartCount(postId);
+			boolean isLike = heartBO.isLike(loginUserId, postId);
 		
 			PostDetail postDetail = new PostDetail();
 			postDetail.setPost(post);
 			postDetail.setUser(user);	
 			postDetail.setComment(comment);
 			postDetail.setHeartCount(heartCount);
+			postDetail.setLike(isLike);
 						
 			postDetailList.add(postDetail);
 		}
@@ -84,16 +92,24 @@ public class PostBO {
 		
 		return postDAO.deletePost(id, userId);
 	}		
+			
+	// 개인 정보 페이지
+	public PostDetailPage getUserData(int userId) {
+		
+		int postCount = postDAO.selectPostCount(userId);
+		
+		List<Post> postList = postDAO.selectPostList(userId);
+		
+		User user = userBO.getUserById(userId);
+		
+		PostDetailPage postDetail = new PostDetailPage();
+		
+		postDetail.setPostList(postList);
+		postDetail.setUser(user);
+		postDetail.setPostCount(postCount);
+		
+		return postDetail;
+	}
 	
-	// 사용자 검색
-	public User searchUser(String loginId) {
-		
-		return postDAO.selectSearchUser(loginId);
-	}
-		
-	public User getUserData(int userId) {
-		
-		return postDAO.selectOtherUser(userId);
-	}
 	
 }

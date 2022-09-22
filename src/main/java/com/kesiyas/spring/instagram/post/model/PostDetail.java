@@ -9,8 +9,9 @@ public class PostDetail {
 	
 	private Post post;
 	private User user;
-	private List<Comment> comment;
+	private List<Comment> comment;	
 	private int heartCount;
+	private boolean isLike;
 		
 	public Post getPost() {
 		return post;
@@ -35,5 +36,12 @@ public class PostDetail {
 	}
 	public void setHeartCount(int heartCount) {
 		this.heartCount = heartCount;
+	}
+	
+	public boolean isLike() {
+		return isLike;
+	}
+	public void setLike(boolean isLike) {
+		this.isLike = isLike;
 	}
 }

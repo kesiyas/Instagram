@@ -62,28 +62,28 @@
 			AND
 			`userId` = #{userId}
 	</delete>
-	
-	<select id="selectSearchUser" parameterType="String" resultType="com.kesiyas.spring.instagram.user.model.User">
-		SELECT 
+		
+	<select id="selectPostPage" resultType="com.kesiyas.spring.instagram.post.model.Post">
+		SELECT
 			`id`
-			, `loginId`
+			, `userId`
+			, `content`
+			, `imgPath`
+			, `createdAt`
+			, `updatedAt`
 		FROM
-			`user`
-		WHERE 
-			`loginId` = #{loginId}
-	
-	</select>
-	
-	<select id="selectOtherUser" parameterType="int" resultType="com.kesiyas.spring.instagram.user.model.User">
-		SELECT 
-			`id`
-			, `loginId`
-			, `nickname`
-		FROM 
-			`user`
-		WHERE 
-			`id` = #{userId}
+			`post`
+
 	</select>	
+	
+	<select id="selectPostCount" parameterType="int" resultType="int">
+		SELECT
+			count(1)
+		FROM
+			`post`
+		WHERE
+			`userId` = ${userId}
+	</select>
 	
 	 
 </mapper>

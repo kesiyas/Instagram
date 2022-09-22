@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kesiyas.spring.instagram.post.bo.PostBO;
-import com.kesiyas.spring.instagram.post.model.Post;
 import com.kesiyas.spring.instagram.post.model.PostDetail;
-import com.kesiyas.spring.instagram.user.model.User;
+import com.kesiyas.spring.instagram.post.model.PostDetailPage;
 
 @Controller
 @RequestMapping("/post")
@@ -28,11 +27,19 @@ public class PostController {
 		return "post/create";
 	}
 	
+	@GetMapping("/peed/view")
+	public String peed() {
+		return "post/list";
+	}
+	
 	// 타임라인 정보 가져오기
 	@GetMapping("/list/view")
-	public String timeLine(Model model) {
+	public String timeLine(Model model, HttpServletRequest request) {
 		
-		List<PostDetail> postList = postBO.getPost();
+		HttpSession session = request.getSession();
+		int userId = (Integer)session.getAttribute("userId");
+		
+		List<PostDetail> postList = postBO.getPost(userId);
 		
 		model.addAttribute("postList", postList);			
 		
@@ -59,12 +66,9 @@ public class PostController {
 	@GetMapping("/detail/view") 
 	public String userDetailPage(Model model, @RequestParam("userId") int userId) {
 		
-		User user = postBO.getUserData(userId);
-		
-		List<Post> list = postBO.getPostList(userId);
-		
-		model.addAttribute("list", list);
-		model.addAttribute("user", user);
+		PostDetailPage postDetail = postBO.getUserData(userId);
+				
+		model.addAttribute("postDetail", postDetail);
 		
 		return "post/detail";
 		

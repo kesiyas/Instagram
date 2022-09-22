@@ -88,4 +88,15 @@
 		
 	</select>
 	
+	<select id="selectUserByLoginId" parameterType="String" resultType="com.kesiyas.spring.instagram.user.model.User">
+		SELECT 
+			`id`
+			, `loginId`
+		FROM
+			`user`
+		WHERE 
+			`loginId` = #{loginId}
+	
+	</select>
+	
 </mapper>

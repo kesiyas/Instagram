@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kesiyas.spring.instagram.post.bo.PostBO;
+import com.kesiyas.spring.instagram.user.bo.UserBO;
 import com.kesiyas.spring.instagram.user.model.User;
 
 @RestController
@@ -22,6 +23,9 @@ import com.kesiyas.spring.instagram.user.model.User;
 public class PostRestController {
 	@Autowired
 	private PostBO postBO;
+	
+	@Autowired
+	private UserBO userBO;
 
 	@PostMapping("/create")
 	public Map<String, String> addPost(
@@ -50,19 +54,20 @@ public class PostRestController {
 	@GetMapping("/search")
 	public Map<String, Integer> searchUser(@RequestParam("loginId") String loginId) {		
 			
-		User user = postBO.searchUser(loginId);	
-		
-		int id = user.getId();
+		User user = userBO.getUserByLoginId(loginId);
 		
 		Map<String, Integer> result = new HashMap<>();
 		
+		int userId = user.getId();
+		
 		if(user != null) {
-			result.put("id", id);
-			
-		}  else {
-			result.put("id", null);
-		}		
-		return result;				
+			result.put("result", userId);
+		} else {
+			result.put("result", null);
+		}
+		
+		return result;
+				
 	}
 	
 	

@@ -47,10 +47,22 @@
 						
 						<img src="${postDetail.post.imgPath }" width="100%" height="400" alt="포스트 사진">
 								
-						<!-- 좋아요 -->
-						<div class="p-2 mt-1" id="like-Div${postDetail.post.id }">
-							<a href="#" class="mr-1 like-Btn" data-post-id="${postDetail.post.id}"><i class="bi bi-heart"></i></a> <span><small class="font-weight-bold">좋아요 ${postDetail.heartCount }개</small></span>
-						</div>			
+						<!-- 좋아요 -->		
+						<div class="p-2 mt-1">
+						
+							<c:choose>
+								<%--로그인한 사용자가 좋아요한 게시물 --%>
+								<c:when test="${postDetail.like}">
+									<a href="#" class="mr-1 unlike-Btn" data-post-id="${postDetail.post.id}"><i class="bi bi-heart-fill"></i></a> <span><small class="font-weight-bold">좋아요 ${postDetail.heartCount }개</small></span>
+								</c:when>
+								
+								<%--로그인한 사용자가 좋아요를 하지 않은 게시물 --%>
+								<c:otherwise>
+									<a href="#" class="mr-1 like-Btn" data-post-id="${postDetail.post.id}"><i class="bi bi-heart"></i></a> <span><small class="font-weight-bold">좋아요 ${postDetail.heartCount }개</small></span>
+								</c:otherwise>
+							</c:choose>
+														
+						</div>	
 						<!-- 좋아요 -->
 					
 						<div class="content-font-size ml-2 mt-1">${postDetail.post.content }</div>
@@ -112,48 +124,50 @@
 
 	<script>
 		$(document).ready(function(){
-
+			
 			// 좋아요 클릭
 			$(".like-Btn").on("click", function(e){
 			
 				e.preventDefault();
-				let postId = $(this).data("post-id");			
-							
-				$.ajax({
-					type:"get"
-					, url:"/post/is_heart"
-					, data:{"postId":postId}
-					, success:function(data){
-						if(data.result == "success") {
-							location.reload();
-							
-						} else {
-							
-						}
-					}
-					, error:function(){
-						alert("중복 체크 에러");
-					}
-				});
-					
+				let postId = $(this).data("post-id");		
+								
 				$.ajax({
 					type:"get"
 					, url:"/post/like"
 					, data:{"postId":postId}
 					, success:function(data){
-						if(data.result) {													
-							location.reload();							
+						if(data.result == "success") {							
+							location.reload();										
 						} else {
 							alert("좋아요 실패");
 						}
 					}
 					, error:function(){
 						alert("좋아요 에러");
-					}
-					
-				});	
-				
+					}					
+				});																		
+			});
 			
+			// 좋아요 취소
+			$(".unlike-Btn").on("click", function(e){
+				e.preventDefault();
+				let postId = $(this).data("post-id");
+				
+				$.ajax({
+					type:"get"
+					, url:"/post/unlike"
+					, data:{"postId":postId}
+					, success:function(data){
+						if(data.result == "success") {						
+							location.reload();						
+						} else {
+							alert("좋아요 취소 실패");
+						}
+					}
+					, error:function(){
+						alert("좋아요 취소 에러");
+					}					
+				});	
 			});
 			
 			// 댓글 작성 버튼
@@ -184,6 +198,7 @@
 				});
 			});
 			
+			
 			// 최근 검색 항목 팝업 열기
 			$("#searchInput").on("click", function(){			
 				$("#recent_search").removeClass("d-none");		
@@ -205,8 +220,8 @@
 					, url:"/post/search"
 					, data:{"loginId":loginId}
 					, success:function(data){
-						if(data.id != null) {
-							location.href="/post/detail/view?userId=" + data.id;
+						if(data.result != null) {
+							location.href="/post/detail/view?userId=" + data.result;
 						} else {
 							alert("사용자 검색 실패");
 						}

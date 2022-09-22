@@ -9,8 +9,10 @@ import com.kesiyas.spring.instagram.post.heart.model.Heart;
 public interface HeartDAO {
 
 	public int insertHeart(@Param("postId") int postId, @Param("userId") int userId);
-	
+
+	public int deleteHeart(@Param("postId") int postId, @Param("userId") int userId);
+			
 	public int selectHeartCount(@Param("postId") int postId);
 	
-	public Heart selectDuplicateHeart(@Param("postId") int postId, @Param("userId") int userId);
+	public int selectCountLikeByUserId(@Param("postId") int postId, @Param("userId") int userId);
 }
