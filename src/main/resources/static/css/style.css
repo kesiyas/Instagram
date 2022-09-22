@@ -52,7 +52,7 @@ header .search_form {
 	font-weight: bold;
 }
 
-.box1 {
+.main-size {
 	align-items: stretch;
     box-sizing: border-box;
     display: flex;
@@ -78,6 +78,7 @@ header .search_form {
 	margin-bottom: 110px;
 	margin-top: 110px;
 }
+
 .contents .login-div {
 	width:400px;
 	height:400px;
@@ -108,10 +109,17 @@ header .search_form {
 	float: right;
 }
 
-.contents .storyBox {
+.contents .feed-box-size {
 	width: 430px;
 	border: solid 2px #f0e9e6;
 	border-radius: 6px;
+}
+
+.menu-box-size {
+	width:400px;
+	height:260px;
+	border-radius: 8px;
+	z-index:2;
 }
 
 

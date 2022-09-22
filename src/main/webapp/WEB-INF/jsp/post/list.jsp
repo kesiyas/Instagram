@@ -19,15 +19,18 @@
 	<div class="container">
 		<c:import url="/WEB-INF/jsp/include/header_search.jsp"></c:import>
 		
-		<main class="box1 align-items-center">
+		<main class="main-size align-items-center">
 			<section class="d-flex mt-5 contents">
 				<article class="d-flex flex-column align-items-center mr-4">
+					<!-- 게시글 작성 버튼-->
 					<div class="bg-info create_post">
 						<a href="/post/create/view" class="btn btn-primary text-white form-control">게시글 작성</a>
 					</div>
+					<!-- 게시글 작성 버튼-->
+					
 					<!-- timeline -->
 					<c:forEach var="postDetail" items="${postList}">				
-					<div class="storyBox mt-3">
+					<div class="feed-box-size mt-3">
 						<div class="d-flex justify-content-between align-items-center m-3">
 							<div class="d-flex align-items-center">
 								<img class="rounded-circle mr-2" height="50" width="50" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
@@ -41,7 +44,9 @@
 								<c:when test="${id == userId}">
 									<a type="button" href="/post/delete?id=${postDetail.post.id }" class="btn btn-danger text-white">삭제</a>
 								</c:when>
-								<c:otherwise></c:otherwise>
+								<c:otherwise>		
+									<i class="bi bi-three-dots btn menu-Btn"></i>					
+								</c:otherwise>
 							</c:choose>
 						</div>
 						
@@ -124,6 +129,7 @@
 
 	<script>
 		$(document).ready(function(){
+			
 			
 			// 좋아요 클릭
 			$(".like-Btn").on("click", function(e){
