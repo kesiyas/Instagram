@@ -2,14 +2,14 @@ package com.kesiyas.spring.instagram.post.model;
 
 import java.util.List;
 
-import com.kesiyas.spring.instagram.comment.model.Comment;
 import com.kesiyas.spring.instagram.user.model.User;
 
 public class PostDetail {
 	
 	private Post post;
 	private User user;
-	private List<Comment> comment;	
+	private List<CommentDetail> commentDetail;	
+	
 	private int heartCount;
 	private boolean isLike;
 		
@@ -25,12 +25,14 @@ public class PostDetail {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public List<Comment> getComment() {
-		return comment;
+	
+	public List<CommentDetail> getCommentDetail() {
+		return commentDetail;
 	}
-	public void setComment(List<Comment> comment) {
-		this.comment = comment;
+	public void setCommentDetail(List<CommentDetail> commentDetail) {
+		this.commentDetail = commentDetail;
 	}
+	
 	public int getHeartCount() {
 		return heartCount;
 	}

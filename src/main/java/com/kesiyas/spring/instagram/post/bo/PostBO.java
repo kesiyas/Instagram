@@ -2,17 +2,16 @@ package com.kesiyas.spring.instagram.post.bo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kesiyas.spring.instagram.comment.bo.CommentBO;
-import com.kesiyas.spring.instagram.comment.model.Comment;
 import com.kesiyas.spring.instagram.common.FileManagerService;
 import com.kesiyas.spring.instagram.post.dao.PostDAO;
 import com.kesiyas.spring.instagram.post.heart.bo.HeartBO;
+import com.kesiyas.spring.instagram.post.model.CommentDetail;
 import com.kesiyas.spring.instagram.post.model.Post;
 import com.kesiyas.spring.instagram.post.model.PostDetail;
 import com.kesiyas.spring.instagram.post.model.PostDetailPage;
@@ -69,7 +68,7 @@ public class PostBO {
 			int userId = post.getUserId();
 			User user = userBO.getUserById(userId);
 			
-			List<Comment> comment = commentBO.getCommentById(postId);		
+			List<CommentDetail> commentDetailList = commentBO.getCommentById(postId);		
 			
 			int heartCount = heartBO.getHeartCount(postId);
 			boolean isLike = heartBO.isLike(loginUserId, postId);
@@ -77,7 +76,7 @@ public class PostBO {
 			PostDetail postDetail = new PostDetail();
 			postDetail.setPost(post);
 			postDetail.setUser(user);	
-			postDetail.setComment(comment);
+			postDetail.setCommentDetail(commentDetailList);
 			postDetail.setHeartCount(heartCount);
 			postDetail.setLike(isLike);
 						

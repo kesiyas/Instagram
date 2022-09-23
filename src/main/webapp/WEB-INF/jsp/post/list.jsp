@@ -12,7 +12,11 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	
+	<script type='text/javascript' src='jquery.bpopup.min.js'></script>
+	
 	<link rel="stylesheet" href="/static/css/style.css" type="text/css">
+	
 </head>
 <body>
 
@@ -45,7 +49,7 @@
 									<a type="button" href="/post/delete?id=${postDetail.post.id }" class="btn btn-danger text-white">삭제</a>
 								</c:when>
 								<c:otherwise>		
-									<i class="bi bi-three-dots btn menu-Btn"></i>					
+									<i class="bi bi-three-dots btn menu-Btn" data-toggle="modal" data-target="#menuModalCenter"></i>					
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -74,10 +78,10 @@
 						
 						<!-- 댓글들 -->
 						<div class="p-2">
-							<c:forEach var="commentList" items="${postDetail.comment }">
+							<c:forEach var="commentDetail" items="${postDetail.commentDetail }">
 								<div class="d-flex align-items-center justify-content-between mt-2">		
-									<div class="font-weight-bold col-2 comment-font-size">${commentList.loginId }</div> 
-									<div class="col-7 comment-font-size">${commentList.content }</div>
+									<div class="font-weight-bold col-2 comment-font-size">${commentDetail.comment.loginId }</div> 
+									<div class="col-7 comment-font-size">${commentDetail.comment.content }</div>
 									<div><i class="bi bi-heart col-2"></i></div>						
 								</div>
 							</c:forEach>
@@ -96,7 +100,7 @@
 					<!-- timeline -->
 					
 				</article>
-				
+										
 				<article class="ml-5">
 					<div class="d-flex align-items-center">
 						<img class="rounded-circle mr-3" height="50" width="50" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
@@ -126,6 +130,18 @@
 		</main>
 		
 	</div>
+	
+	<div class="modal fade" id="menuModalCenter" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-body text-center d-flex">
+					<button type="button" class="btn bg-white text-danger ">삭제</button>
+					<button type="button" class="btn bg-white">팔로우 추가</button>
+					<button type="button" class="btn bg-white">팔로우 취소</button>	
+				</div>				
+			</div>
+		</div>
+	</div>			
 
 	<script>
 		$(document).ready(function(){

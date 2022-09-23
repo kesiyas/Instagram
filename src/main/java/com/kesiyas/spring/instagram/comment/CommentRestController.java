@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kesiyas.spring.instagram.comment.bo.CommentBO;
 
 @RestController
-public class CommentController {
+public class CommentRestController {
 	
 	@Autowired
 	private CommentBO commentBO;

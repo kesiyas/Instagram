@@ -51,4 +51,5 @@ public class UserBO {
 	public User getUserByLoginId(String loginId) {
 		return userDAO.selectUserByLoginId(loginId);
 	}
+	
 }
