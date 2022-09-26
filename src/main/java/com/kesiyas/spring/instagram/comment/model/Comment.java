@@ -6,7 +6,6 @@ public class Comment {
 	private int id;
 	private int userId;
 	private int postId;
-	private String loginId;
 	private String content;
 	private Date createdAt;
 	private Date updatedAt;
@@ -29,12 +28,7 @@ public class Comment {
 	public void setPostId(int postId) {
 		this.postId = postId;
 	}
-	public String getLoginId() {
-		return loginId;
-	}
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
+	
 	public String getContent() {
 		return content;
 	}

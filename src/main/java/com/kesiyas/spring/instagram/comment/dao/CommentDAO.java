@@ -13,7 +13,6 @@ public interface CommentDAO {
 	public int insertComment(
 			@Param("userId") int userId
 			, @Param("postId") int postId
-			, @Param("loginId") String loginId
 			, @Param("content") String content);
 
 	public List<Comment> selectCommentById(@Param("id") int id);

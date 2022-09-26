@@ -11,7 +11,6 @@
 		(
 			`userId`
 			, `postId`
-			, `loginId`
 			, `content`
 			, `createdAt`
 			, `updatedAt`
@@ -20,7 +19,6 @@
 		(
 			#{userId}
 			, #{postId}
-			, #{loginId}
 			, #{content}
 			, now()
 			, now()
@@ -32,7 +30,6 @@
 			`id`
 			, `userId`	
 			, `postId`
-			, `loginId`
 			, `content`
 			, `createdAt`
 			, `updatedAt`

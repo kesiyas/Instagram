@@ -39,13 +39,21 @@
 							<div class="d-flex align-items-center">
 								<img class="rounded-circle mr-2" height="50" width="50" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
 								<div class="font-weight-bold">${postDetail.user.loginId}</div>
+								
+								<c:choose>
+									<c:when test="${postDetail.user.id != userId }">
+										<div class="ml-3">
+											<i class="bi bi-person-plus"></i>
+											<span><a href="#" class="follow-Btn btn font-weight-bold comment-font-size pl-0" data-followee-id="${postDetail.post.id}">팔로우</a></span>
+									</div>
+									</c:when>
+									<c:otherwise></c:otherwise>
+								</c:choose>
 							</div>
 														
-							<!-- 로그인한 사용자의 포스트에만 삭제버튼 나오게 하기 -->					
-							<c:set var="id" value="${postDetail.user.id}" />
-							<c:set var="userId" value="${userId}" />						
+							<!-- 로그인한 사용자의 포스트에만 삭제버튼 나오게 하기 -->										
 							<c:choose>
-								<c:when test="${id == userId}">
+								<c:when test="${postDetail.user.id == userId}">
 									<a type="button" href="/post/delete?id=${postDetail.post.id }" class="btn btn-danger text-white">삭제</a>
 								</c:when>
 								<c:otherwise>		
@@ -80,7 +88,7 @@
 						<div class="p-2">
 							<c:forEach var="commentDetail" items="${postDetail.commentDetail }">
 								<div class="d-flex align-items-center justify-content-between mt-2">		
-									<div class="font-weight-bold col-2 comment-font-size">${commentDetail.comment.loginId }</div> 
+									<div class="font-weight-bold col-2 comment-font-size">${commentDetail.user.loginId }</div> 
 									<div class="col-7 comment-font-size">${commentDetail.comment.content }</div>
 									<div><i class="bi bi-heart col-2"></i></div>						
 								</div>
@@ -91,7 +99,7 @@
 							
 						<!-- 댓글 입력 -->
 						<div class="d-flex justify-content-between align-items-center p-2"> 
-							<input type="text" class="form-control col-9" placeholder="내용을 입력해주세요." id="commentInput${postDetail.post.id }">
+							<input type="text" class="comment-input-style form-control col-9" placeholder="내용을 입력해주세요." id="commentInput${postDetail.post.id }">
 							<button type="button" class="comment-Btn btn btn-info text-white" data-post-id="${postDetail.post.id }">게시</button>
 						</div>
 						<!-- 댓글 입력 -->
@@ -134,10 +142,10 @@
 	<div class="modal fade" id="menuModalCenter" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
-				<div class="modal-body text-center d-flex">
-					<button type="button" class="btn bg-white text-danger ">삭제</button>
-					<button type="button" class="btn bg-white">팔로우 추가</button>
-					<button type="button" class="btn bg-white">팔로우 취소</button>	
+				<div class="modal-body text-center p-0">
+					<a href="#" class="text-danger modal-sytle">삭제</a>
+					<a href="#" class="modal-sytle">팔로우 취소</a>
+					<a href="#" class="modal-last-sytle">취소</a>
 				</div>				
 			</div>
 		</div>
@@ -146,6 +154,28 @@
 	<script>
 		$(document).ready(function(){
 			
+			// 팔로우 추가 기능
+			$(".follow-Btn").on("click", function(e){
+			
+				e.preventDefault();
+				let followeeId = $(this).data("followee-id");
+				
+				$.ajax({
+					type:"get"
+					, url:"/user/follow"
+					, data:{"followeeId":followeeId}
+					, success:function(data){
+						if(data.result=="success"){
+							location.reload();
+						}else {
+							alert("팔로우 추가 실패");
+						}
+					}
+					, error:function(){
+						alert("팔로우 추가 에러");
+					}
+				});							
+			});
 			
 			// 좋아요 클릭
 			$(".like-Btn").on("click", function(e){

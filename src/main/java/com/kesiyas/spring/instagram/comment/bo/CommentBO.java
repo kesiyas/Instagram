@@ -21,9 +21,9 @@ public class CommentBO {
 	@Autowired
 	private UserBO userBO;
 	
-	public int addComment(int userId, int postId, String loginId, String content) {
+	public int addComment(int userId, int postId, String content) {
 		
-		return commentDAO.insertComment(userId, postId, loginId, content);
+		return commentDAO.insertComment(userId, postId, content);
 	}
 	
 	// 게시글에 대응하는 댓글 리스트 가져오는 기능
@@ -33,6 +33,8 @@ public class CommentBO {
 		List<CommentDetail> commnetDetailList = new ArrayList<>();
 		
 		for(Comment comment : commentList) {
+			
+			id = comment.getUserId();
 			
 			User user = userBO.getUserById(id);
 			

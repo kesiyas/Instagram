@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileManagerService {
 
-	public static final String FILE_UPLOAD_PATH = "D:\\정민우\\spring\\test\\instagramfile";
+	public static final String FILE_UPLOAD_PATH = "E:\\정민우\\spring\\test\\instagramfile";
 	
 	// 로그를 추가하기 위한 객체 생성
 	private static Logger logger = LoggerFactory.getLogger(FileManagerService.class);
