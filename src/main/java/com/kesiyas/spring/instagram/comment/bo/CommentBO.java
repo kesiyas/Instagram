@@ -46,8 +46,13 @@ public class CommentBO {
 			commnetDetailList.add(commentDetail);
 		}
 			
-		return commnetDetailList;
+		return commnetDetailList;	
+	}
+	
+	// 댓글 삭제 기능
+	public int deleteComment(int postId, int userId) {
 		
+		return commentDAO.deleteComment(postId, userId);
 	}
 
 }

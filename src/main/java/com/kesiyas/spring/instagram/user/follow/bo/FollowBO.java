@@ -16,4 +16,10 @@ public class FollowBO {
 		return followDAO.insertFollow(followeeId, followerId);
 	}
 	
+	// 포스트 작성유저와 팔로우가 되어 있는지 확인
+	public boolean isLike(int followeeId, int followerId) {
+		
+		return true;
+	}
+	
 }

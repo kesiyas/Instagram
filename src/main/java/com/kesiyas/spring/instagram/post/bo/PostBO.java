@@ -87,9 +87,24 @@ public class PostBO {
 	}
 	
 	// 포스트 삭제
-	public int deletePost(int id, int userId) {
+	public int deletePost(int postId, int userId) {
 		
-		return postDAO.deletePost(id, userId);
+		Post post = postDAO.selectPostByIdANDUserId(postId, userId);
+		
+		if(post == null) {
+			return 0;
+		}
+		
+		// 이미지 삭제
+		FileManagerService.removeFile(post.getImgPath());
+		
+		// 좋아요 삭제
+		heartBO.unLike(postId, userId);
+		
+		// 댓글 삭제	
+		commentBO.deleteComment(postId, userId);
+		
+		return postDAO.deletePost(postId, userId);
 	}		
 			
 	// 개인 정보 페이지
@@ -109,6 +124,5 @@ public class PostBO {
 		
 		return postDetail;
 	}
-	
-	
+
 }

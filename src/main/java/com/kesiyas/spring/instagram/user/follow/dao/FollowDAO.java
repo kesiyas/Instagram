@@ -10,4 +10,8 @@ public interface FollowDAO {
 			@Param("followeeId") int followeeId
 			, @Param("followerId") int followerId);
 	
+	public int selectFollow(
+			@Param("followeeId") int followeeId
+			, @Param("followerId") int followerId);
+	
 }

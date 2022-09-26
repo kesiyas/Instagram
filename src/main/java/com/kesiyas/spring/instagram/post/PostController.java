@@ -45,23 +45,7 @@ public class PostController {
 		
 		return "post/list";
 	}
-	
-	// 게시글 삭제
-	@GetMapping("/delete")
-	public String deletePost(@RequestParam("id") int id, HttpServletRequest request) {
 		
-		HttpSession session = request.getSession();
-		int userId  = (Integer)session.getAttribute("userId");
-		
-		int count = postBO.deletePost(id, userId);
-		
-		if(count == 1) {
-			return "redirect:/post/list/view";
-		} else {
-			return "";
-		}	
-	}
-	
 	// 사용자 페이지로 이동
 	@GetMapping("/detail/view") 
 	public String userDetailPage(Model model, @RequestParam("userId") int userId) {

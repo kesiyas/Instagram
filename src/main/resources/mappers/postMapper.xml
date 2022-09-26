@@ -58,12 +58,12 @@
 		FROM
 			`post`
 		WHERE
-			`id` = #{id}
+			`id` = #{postId}
 			AND
-			`userId` = #{userId}
+		 	`userId` = #{userId}
 	</delete>
 		
-	<select id="selectPostPage" resultType="com.kesiyas.spring.instagram.post.model.Post">
+	<select id="selectPostByIdANDUserId" parameterType="int" resultType="com.kesiyas.spring.instagram.post.model.Post">
 		SELECT
 			`id`
 			, `userId`
@@ -73,7 +73,10 @@
 			, `updatedAt`
 		FROM
 			`post`
-
+		WHERE
+		 	`id` = #{postId}	
+		 	AND
+		 	`userId` = #{userId}
 	</select>	
 	
 	<select id="selectPostCount" parameterType="int" resultType="int">
@@ -84,6 +87,5 @@
 		WHERE
 			`userId` = ${userId}
 	</select>
-	
-	 
+		 
 </mapper>

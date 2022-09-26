@@ -115,7 +115,6 @@ header .search_form {
 	border-radius: 6px;
 }
 
-
 .contents .comment-margin {
 	margin-left: 120px;
 }
@@ -147,24 +146,24 @@ header .search_form {
 	border-radius: 8px;
 }
 
-.modal .modal-sytle { 
+#menuModalCenter .modal-style { 
 	box-sizing:border;
 	height:45px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	text-decoration: none;
 	border-bottom: 1px solid #dddddd;
+	text-decoration: none;
 }
 
-.modal-last-sytle {
+#menuModalCenter .modal-last-style {
 	box-sizing:border;
 	height:45px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	text-decoration: none;
 	border-bottom: 0;
+	text-decoration: none;
 }
 
 .detail_nickname_font{
