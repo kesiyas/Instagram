@@ -12,6 +12,8 @@ public class PostDetail {
 	
 	private int heartCount;
 	private boolean isLike;
+	
+	private boolean isFollow;
 		
 	public Post getPost() {
 		return post;
@@ -45,5 +47,12 @@ public class PostDetail {
 	}
 	public void setLike(boolean isLike) {
 		this.isLike = isLike;
+	}
+	
+	public boolean isFollow() {
+		return isFollow;
+	}
+	public void setFollow(boolean isFollow) {
+		this.isFollow = isFollow;
 	}
 }

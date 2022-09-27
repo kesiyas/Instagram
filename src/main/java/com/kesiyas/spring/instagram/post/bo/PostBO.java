@@ -16,6 +16,7 @@ import com.kesiyas.spring.instagram.post.model.Post;
 import com.kesiyas.spring.instagram.post.model.PostDetail;
 import com.kesiyas.spring.instagram.post.model.PostDetailPage;
 import com.kesiyas.spring.instagram.user.bo.UserBO;
+import com.kesiyas.spring.instagram.user.follow.bo.FollowBO;
 import com.kesiyas.spring.instagram.user.model.User;
 
 @Service
@@ -31,6 +32,9 @@ public class PostBO {
 	
 	@Autowired
 	private HeartBO heartBO;
+	
+	@Autowired
+	private FollowBO followBO;
 	
 	// 포스트 작성
 	public int addPost(String content, MultipartFile file, int userId) {		
@@ -72,6 +76,8 @@ public class PostBO {
 			
 			int heartCount = heartBO.getHeartCount(postId);
 			boolean isLike = heartBO.isLike(loginUserId, postId);
+			
+			boolean isFollow = followBO.isFollow(userId, loginUserId);
 		
 			PostDetail postDetail = new PostDetail();
 			postDetail.setPost(post);
@@ -79,6 +85,7 @@ public class PostBO {
 			postDetail.setCommentDetail(commentDetailList);
 			postDetail.setHeartCount(heartCount);
 			postDetail.setLike(isLike);
+			postDetail.setFollow(isFollow);
 						
 			postDetailList.add(postDetail);
 		}

@@ -13,14 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kesiyas.spring.instagram.post.bo.PostBO;
+import com.kesiyas.spring.instagram.post.model.FollowDetail;
 import com.kesiyas.spring.instagram.post.model.PostDetail;
 import com.kesiyas.spring.instagram.post.model.PostDetailPage;
+import com.kesiyas.spring.instagram.user.follow.bo.FollowBO;
 
 @Controller
 @RequestMapping("/post")
 public class PostController {
 	@Autowired
 	private PostBO postBO;
+	
+	@Autowired
+	private FollowBO followBO;
 	
 	@GetMapping("/create/view")
 	public String create() {
@@ -41,7 +46,10 @@ public class PostController {
 		
 		List<PostDetail> postList = postBO.getPost(userId);
 		
-		model.addAttribute("postList", postList);			
+		model.addAttribute("postList", postList);
+		
+		List<FollowDetail> followDetailList = followBO.followList(userId);
+		model.addAttribute("followDetailList", followDetailList);
 		
 		return "post/list";
 	}

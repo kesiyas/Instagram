@@ -19,7 +19,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 			, Object handler) throws IOException {
 		
 		HttpSession session = request.getSession();
-		Integer userId = (Integer)session.getAttribute("useId");
+		Integer userId = (Integer)session.getAttribute("userId");
 		
 		// /user/siginin/view
 		String uri = request.getRequestURI();
@@ -36,6 +36,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 				response.sendRedirect("/post/list/view");
 				return false;
 			}
+			
 		} else {
 			// 로그인이 되어 있지 않은 경우
 			// 리스트 페이지, 입력화면, 디테일 화면 접속시도하면
@@ -63,7 +64,6 @@ public class PermissionInterceptor implements HandlerInterceptor {
 	
 	// Response가 완성된 이후
 	@Override
-
 	public void afterCompletion(
 			HttpServletRequest request, 
 			HttpServletResponse response, 

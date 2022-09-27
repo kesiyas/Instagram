@@ -12,15 +12,35 @@
 			`followeeId`
 			, `followerId`
 			, `createdAt`
-			, `updatedAt`
 		)
 		VALUES
 		(
 			#{followeeId}
 			, #{followerId}
 			, now()
-			, now()
-		)
-	
+		)	
 	</insert>
+	
+	<select id="selectCountFollowByFollowerId" parameterType="int" resultType="int">
+		SELECT
+			count(1)
+		FROM
+			`follow`
+		WHERE 
+			`followeeId` = #{followeeId}
+			AND
+		 	`followerId` = #{followerId}
+	</select>
+	
+	<select id="selectFollowList" parameterType="int" resultType="com.kesiyas.spring.instagram.user.follow.model.Follow">
+		SELECT
+			`id`
+			`followeeId`
+			, `followerId`
+			, `createdAt`
+		FROM
+			`follow`
+		WHERE
+			`followerId` = #{loginUserId}
+	</select>
 </mapper>

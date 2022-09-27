@@ -26,11 +26,12 @@ public class FollowRestController {
 			@RequestParam("followeeId") int followeeId
 			, HttpServletRequest request) {
 		
-			HttpSession session = request.getSession();	
+			HttpSession session = request.getSession();
+			
 			int followerId = (Integer)session.getAttribute("userId");
 			
 			int count = followBO.addFollow(followeeId, followerId);
-			
+					
 			Map<String, String> result = new HashMap<>();
 			
 			if(count == 1) {

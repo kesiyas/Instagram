@@ -28,7 +28,7 @@ public class WebMVCConfig implements WebMvcConfigurer{
 		
 		registry.addInterceptor(interceptor)
 		.addPathPatterns("/**") // 인터셉터를 거쳐서 처리할 페이지 규칙
-		.excludePathPatterns("/static/**", "/images/**");
+		.excludePathPatterns("/static/**", "/images/**", "/user/signout", "/user/follow");
 	}
 
 }

@@ -37,18 +37,15 @@
 							<div class="d-flex align-items-center justify-content-between">
 								<div class="d-flex align-items-center px-3 pt-2">
 									<img class="rounded-circle mr-2" height="50" width="50" src="https://cdn.pixabay.com/photo/2022/09/02/11/27/otter-7427340_960_720.jpg" alt="프로필사진">
-									<div class="font-weight-bold">${postDetail.user.loginId}</div>
-									
+									<div class="font-weight-bold">${postDetail.user.loginId}</div>								
 									<c:choose>
-										<c:when test="${postDetail.user.id != userId }">
-											<div class="ml-3">
-												
+										<c:when test="${postDetail.user.id != userId && postDetail.follow eq false}">
+											<div class="ml-3">											
 												<i class="bi bi-person-plus"></i>
-												<span><a href="#" class="follow-Btn btn font-weight-bold comment-font-size pl-0" data-followee-id="${postDetail.post.id}">팔로우</a></span>
-										</div>
+												<span><a href="#" class="follow-Btn font-weight-bold comment-font-size pl-0" data-followee-id="${postDetail.post.userId}">팔로우</a></span>
+											</div>
 										</c:when>
 										<c:otherwise>
-											<div></div>
 										</c:otherwise>
 									</c:choose>
 								</div>						
@@ -113,15 +110,15 @@
 					<!-- 팔로우 목록 -->
 					<div class="my-5">
 						<div class="text-center text-info font-weight-bold ml-4">팔로우 목록</div>
-						<ul>
-							<li class="d-flex justify-content-between mt-3">user2 <span><a href="#">팔로우</a></span></li>
-							<li class="d-flex justify-content-between mt-3">user3 <span><a href="#">팔로우</a></span></li>
-							<li class="d-flex justify-content-between mt-3">user4 <span><a href="#">팔로우</a></span></li>
-						</ul>
+						<c:forEach var="followDetailList" items="${followDetailList }">
+							<ul>
+								<li class="d-flex justify-content-between mt-3">${followDetailList.follow.id }<span class="ml-4"><a href="#" class="text-danger">팔로우 취소</a></span></li>							
+							</ul>
+						</c:forEach>
 					</div>
 					<!-- 팔로우 목록 -->
 									
-					<div class="text-center mt-3">
+					<div class="text-center mt-3 ml-3">
 						<small>© 2022 Instagram from Meta</small>
 					</div>	
 	
