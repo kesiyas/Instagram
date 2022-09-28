@@ -44,8 +44,7 @@ public class PostController {
 		HttpSession session = request.getSession();
 		int userId = (Integer)session.getAttribute("userId");
 		
-		List<PostDetail> postList = postBO.getPost(userId);
-		
+		List<PostDetail> postList = postBO.getPost(userId);		
 		model.addAttribute("postList", postList);
 		
 		List<FollowDetail> followDetailList = followBO.followList(userId);

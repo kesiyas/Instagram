@@ -110,11 +110,12 @@
 					<!-- 팔로우 목록 -->
 					<div class="my-5">
 						<div class="text-center text-info font-weight-bold ml-4">팔로우 목록</div>
-						<c:forEach var="followDetailList" items="${followDetailList }">
-							<ul>
-								<li class="d-flex justify-content-between mt-3">${followDetailList.follow.id }<span class="ml-4"><a href="#" class="text-danger">팔로우 취소</a></span></li>							
-							</ul>
-						</c:forEach>
+						<ul>
+							<c:forEach var="followDetailList" items="${followDetailList }">
+								<li class="d-flex justify-content-between mt-3 font-weight-bold">${followDetailList.user.loginId }
+								<span class="ml-4"><a href="#" class="text-danger unfollow-btn" data-followee-id="${followDetailList.follow.followeeId }">팔로우 취소</a></span></li>									
+							</c:forEach>
+						</ul>
 					</div>
 					<!-- 팔로우 목록 -->
 									
@@ -132,7 +133,7 @@
 			<div class="modal-content">
 				<div class="modal-body text-center p-0">
 					<a href="#" class="text-danger modal-style delete-Btn">삭제</a>
-					<a href="#" class="modal-style">팔로우 취소</a>
+					<a href="#" class="modal-style" class="modal-unfollow-btn">팔로우 취소</a>
 					<a href="#" class="modal-last-style">취소</a>
 				</div>				
 			</div>
@@ -174,13 +175,42 @@
 				let userId = $(this).data("user-id");
 				let loginUserId = $("#menuModalCenter").data("user-id");
 				
-				if(userId != loginUserId) {
-					$(".delete-Btn").addClass("d-none");
-				}
-				
 				$(".delete-Btn").data("post-id", postId);
 				
+				if(userId != loginUserId) {
+					$(".delete-Btn").addClass("d-none");		
+				}			
+				
+				if(userId == loginUserId) {
+					$(".modal-unfollow-btn").addClass("d-none");
+					return;
+				}
 			});
+			
+			// 팔로우 취소 기능
+			$(".unfollow-btn").on("click", function(e){
+				
+				e.preventDefault();
+				let followeeId = $(this).data("followee-id");
+				
+				$.ajax({
+					type:"get"
+					, url:"/user/unfollow"
+					, data:{"followeeId":followeeId}
+					, success:function(data){
+						if(data.result=="success"){
+							location.reload();
+						}else {
+							alert("팔로우 취소 실패");
+						}
+					}
+					, error:function(){
+						alert("팔로우 취소 에러");
+					}
+				});
+				
+			});
+			
 			
 			// 팔로우 추가 기능
 			$(".follow-Btn").on("click", function(e){

@@ -35,7 +35,7 @@
 	<select id="selectFollowList" parameterType="int" resultType="com.kesiyas.spring.instagram.user.follow.model.Follow">
 		SELECT
 			`id`
-			`followeeId`
+			,`followeeId`
 			, `followerId`
 			, `createdAt`
 		FROM
@@ -43,4 +43,15 @@
 		WHERE
 			`followerId` = #{loginUserId}
 	</select>
+	
+	<delete id="deleteFollow" parameterType="int">
+		DELETE 
+		FROM
+			`follow`
+		WHERE 
+			`followeeId` = #{followeeId}
+			AND
+		 	`followerId` = #{followerId}
+	</delete>	
+
 </mapper>

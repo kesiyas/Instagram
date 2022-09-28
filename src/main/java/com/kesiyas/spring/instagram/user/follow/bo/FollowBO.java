@@ -43,16 +43,22 @@ public class FollowBO {
 			
 			int followeeId = follow.getFolloweeId();
 			
-			User user = userBO.getUserById(followeeId);
+			User followeeUser = userBO.getUserById(followeeId);
 			
 			FollowDetail followDetail = new FollowDetail();
-			followDetail.setUser(user);
+			followDetail.setUser(followeeUser);
 			followDetail.setFollow(follow);
 			
 			followDetailList.add(followDetail);			
 		}
 		
 		return followDetailList;
+	}
+	
+	// 팔로우 취소 기능
+	public int unFollow(int followeeId, int followerId) {
+		
+		return followDAO.deleteFollow(followeeId, followerId);
 	}
 	
 }

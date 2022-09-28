@@ -19,4 +19,10 @@ public interface FollowDAO {
 			, @Param("followerId") int followerId);
 	
 	public List<Follow> selectFollowList(@Param("loginUserId") int loginUserId);
+	
+	public int deleteFollow(
+			@Param("followeeId") int followeeId
+			, @Param("followerId") int followerId);
 }
+
+

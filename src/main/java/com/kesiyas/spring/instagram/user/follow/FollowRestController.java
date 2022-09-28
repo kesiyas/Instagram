@@ -43,4 +43,25 @@ public class FollowRestController {
 			return result;
 	}
 
+	@GetMapping("/unfollow")
+	public Map<String, String> unFollow(
+			@RequestParam("followeeId") int followeeId
+			, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		
+		int followerId = (Integer)session.getAttribute("userId");
+		
+		int count = followBO.unFollow(followeeId, followerId);
+		
+		Map<String, String> result = new HashMap<>();
+		
+		if(count == 1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		
+		return result;
+	}
 }
